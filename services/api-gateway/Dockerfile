@@ -2,10 +2,10 @@ FROM node:16-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY services/api-gateway/package*.json ./
 RUN npm install
 
-COPY . .
+COPY services/api-gateway/. .
 
 EXPOSE 4000
 
