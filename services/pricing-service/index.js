@@ -3,16 +3,13 @@ const cors = require('cors');
 const helmet = require('helmet');
 const winston = require('winston');
 const Redis = require('ioredis');
-const fs = require('fs');
-const path = require('path');
-const { initializePricingData, loadPricingData } = require('./utils/initializePricingData');
 const pricingService = require('./services/pricingService');
+// Import the pricing models directly, which is the robust way to load data
+const localComputePricing = require('./models/awsComputePricing');
 
-// Initialize Express app
 const app = express();
 const PORT = process.env.PORT || 4001;
 
-// Configure logger
 const logger = winston.createLogger({
   level: 'info',
   format: winston.format.combine(
@@ -25,7 +22,6 @@ const logger = winston.createLogger({
   ]
 });
 
-// Initialize Redis client
 const memoryCache = {};
 const redis = {
   get: async (key) => {
@@ -44,7 +40,7 @@ const redis = {
     } else if (ttl) {
       expiryTime = Date.now() + ttl;
     } else {
-      expiryTime = Date.now() + (3600 * 1000); // Default 1 hour
+      expiryTime = Date.now() + (3600 * 1000);
     }
     
     memoryCache[key] = {
@@ -59,13 +55,10 @@ const redis = {
   }
 };
 
-
-// Middleware
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-// Request logging middleware
 app.use((req, res, next) => {
   const requestId = req.headers['x-request-id'] || Date.now().toString(36) + Math.random().toString(36).substring(2);
   
@@ -81,8 +74,6 @@ app.use((req, res, next) => {
   next();
 });
 
-
-// Define routes
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
@@ -123,6 +114,7 @@ app.post('/calculate', async (req, res) => {
   }
 });
 
+// Rewritten /instances route to be robust
 app.get('/instances', (req, res) => {
   try {
     const provider = req.query.provider;
@@ -132,19 +124,19 @@ app.get('/instances', (req, res) => {
       return res.status(400).json({ error: 'Provider is required' });
     }
     
-    const pricingData = loadPricingData();
+    const pricingData = localComputePricing;
     
-    if (!pricingData.compute[provider]) {
+    if (!pricingData[provider]) {
       return res.status(404).json({ error: `Provider ${provider} not found` });
     }
     
-    if (region && !pricingData.compute[provider][region]) {
+    if (region && !pricingData[provider][region]) {
       return res.status(404).json({ error: `Region ${region} not found for provider ${provider}` });
     }
     
     const regionData = region ? 
-      { [region]: pricingData.compute[provider][region] } : 
-      pricingData.compute[provider];
+      { [region]: pricingData[provider][region] } : 
+      pricingData[provider];
     
     const instances = {};
     
@@ -167,7 +159,6 @@ app.get('/instances', (req, res) => {
   }
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   logger.error({
     requestId: req.requestId,
@@ -181,7 +172,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
 app.listen(PORT, () => {
   logger.info(`Pricing Service listening on port ${PORT}`);
 });
