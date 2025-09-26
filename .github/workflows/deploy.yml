@@ -3,7 +3,7 @@ name: Deploy Clouditect to Google Cloud Run
 on:
   push:
     branches:
-      - main  # Or your primary branch
+      - main
 
 jobs:
   deploy:
@@ -31,7 +31,7 @@ jobs:
       # --- Build and Deploy Frontend ---
       - name: Build and Push Frontend
         run: |-
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-frontend:latest ./frontend
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-frontend:latest -f ./frontend/Dockerfile .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-frontend:latest
 
       - name: Deploy Frontend to Cloud Run
@@ -46,7 +46,7 @@ jobs:
       # --- Build and Deploy API Gateway ---
       - name: Build and Push API Gateway
         run: |-
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-api-gateway:latest ./services/api-gateway
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-api-gateway:latest -f ./services/api-gateway/Dockerfile .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-api-gateway:latest
 
       - name: Deploy API Gateway to Cloud Run
@@ -61,7 +61,7 @@ jobs:
       # --- Build and Deploy Pricing Service ---
       - name: Build and Push Pricing Service
         run: |-
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest ./services/pricing-service
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest -f ./services/pricing-service/Dockerfile .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest
 
       - name: Deploy Pricing Service to Cloud Run
@@ -76,7 +76,7 @@ jobs:
       # --- Build and Deploy Recommendation Service ---
       - name: Build and Push Recommendation Service
         run: |-
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-recommendation-service:latest ./services/recommendation-service
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-recommendation-service:latest -f ./services/recommendation-service/Dockerfile .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-recommendation-service:latest
 
       - name: Deploy Recommendation Service to Cloud Run
@@ -91,7 +91,7 @@ jobs:
       # --- Build and Deploy Provider Service ---
       - name: Build and Push Provider Service
         run: |-
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-provider-service:latest ./services/provider-service
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-provider-service:latest -f ./services/provider-service/Dockerfile .
           docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-provider-service:latest
 
       - name: Deploy Provider Service to Cloud Run
