@@ -81,14 +81,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Initialize pricing data if not exists
-try {
-  initializePricingData();
-  logger.info('Pricing data loaded successfully');
-} catch (error) {
-  logger.error(`Error loading pricing data: ${error.message}`);
-  initializePricingData();
-}
 
 // Define routes
 app.get('/health', (req, res) => {
