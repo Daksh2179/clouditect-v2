@@ -1,0 +1,26 @@
+// services/pricing-service/models/digitaloceanComputePricing.js
+
+const digitaloceanComputePricing = {
+  "nyc1": {
+    "s-1vcpu-1gb": {
+      "hourly": 0.00744,
+      "monthly": 5,
+      "vcpu": 1,
+      "memory": 1
+    },
+    "s-2vcpu-4gb": {
+      "hourly": 0.02976,
+      "monthly": 20,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "s-4vcpu-8gb": {
+      "hourly": 0.05952,
+      "monthly": 40,
+      "vcpu": 4,
+      "memory": 8
+    }
+  }
+};
+
+module.exports = digitaloceanComputePricing;

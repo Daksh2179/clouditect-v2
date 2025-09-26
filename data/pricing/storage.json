@@ -1,0 +1,80 @@
+{
+  "aws": {
+    "s3_standard": {
+      "monthly_per_gb": 0.023
+    },
+    "ebs_gp2": {
+      "monthly_per_gb": 0.1
+    }
+  },
+  "azure": {
+    "blob_storage": {
+      "monthly_per_gb": 0.0184
+    },
+    "managed_disk_standard": {
+      "monthly_per_gb": 0.0475
+    }
+  },
+  "gcp": {
+    "cloud_storage_standard": {
+      "monthly_per_gb": 0.02
+    },
+    "persistent_disk_standard": {
+      "monthly_per_gb": 0.04
+    }
+  },
+  "ibm": {
+    "cloud_object_storage_standard": {
+      "monthly_per_gb": 0.0225,
+      "details": {
+        "min_storage_duration": "30 days",
+        "availability": "99.999%",
+        "cross_region_options": true
+      }
+    },
+    "block_storage_general": {
+      "monthly_per_gb": 0.1,
+      "details": {
+        "iops_base": "3 IOPS/GB",
+        "max_volume_size": "16 TB",
+        "snapshot_support": true
+      }
+    }
+  },
+  "oracle": {
+    "object_storage_standard": {
+      "monthly_per_gb": 0.0255,
+      "details": {
+        "free_tier": "10 GB free",
+        "min_storage_duration": "None",
+        "availability": "99.9%"
+      }
+    },
+    "block_volume": {
+      "monthly_per_gb": 0.0425,
+      "details": {
+        "performance_tiers": true,
+        "volume_groups": true,
+        "max_volume_size": "32 TB"
+      }
+    }
+  },
+  "alibaba": {
+    "oss_standard": {
+      "monthly_per_gb": 0.019,
+      "details": {
+        "availability": "99.95%",
+        "access_frequency": "Frequent",
+        "asia_optimized": true
+      }
+    },
+    "disk_standard": {
+      "monthly_per_gb": 0.045,
+      "details": {
+        "max_iops": "500",
+        "max_throughput": "80 MB/s",
+        "snapshot_support": true
+      }
+    }
+  }
+}

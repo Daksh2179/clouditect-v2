@@ -1,0 +1,40 @@
+{
+  "us-central1": {
+    "e2-micro": {
+      "hourly": 0.0105,
+      "monthly": 7.67,
+      "vcpu": 0.25,
+      "memory": 1
+    },
+    "e2-small": {
+      "hourly": 0.021,
+      "monthly": 15.33,
+      "vcpu": 0.5,
+      "memory": 2
+    },
+    "e2-medium": {
+      "hourly": 0.042,
+      "monthly": 30.66,
+      "vcpu": 1,
+      "memory": 4
+    },
+    "n1-standard-1": {
+      "hourly": 0.0475,
+      "monthly": 34.68,
+      "vcpu": 1,
+      "memory": 3.75
+    },
+    "n1-standard-2": {
+      "hourly": 0.095,
+      "monthly": 69.35,
+      "vcpu": 2,
+      "memory": 7.5
+    },
+    "c2-standard-4": {
+      "hourly": 0.2088,
+      "monthly": 152.42,
+      "vcpu": 4,
+      "memory": 16
+    }
+  }
+}

@@ -1,0 +1,35 @@
+// Alibaba Cloud compute pricing model
+module.exports = {
+  'us-west-1': {
+    "ecs.g6.large": {
+      "hourly": 0.0925,
+      "monthly": 67.53,
+      "vcpu": 2,
+      "memory": 8
+    },
+    "ecs.g6.xlarge": {
+      "hourly": 0.185,
+      "monthly": 135.05,
+      "vcpu": 4,
+      "memory": 16
+    },
+    "ecs.g6.2xlarge": {
+      "hourly": 0.37,
+      "monthly": 270.1,
+      "vcpu": 8,
+      "memory": 32
+    },
+    "ecs.c6.large": {
+      "hourly": 0.083,
+      "monthly": 60.59,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "ecs.r6.large": {
+      "hourly": 0.116,
+      "monthly": 84.68,
+      "vcpu": 2,
+      "memory": 16
+    }
+  }
+};

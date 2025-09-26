@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # Frontend React Application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - api-gateway
+    environment:
+      - REACT_APP_API_URL=http://localhost:4000
+    networks:
+      - app-network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./services/api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    volumes:
+      - ./services/api-gateway:/app
+      - /app/node_modules
+    environment:
+      - PORT=${API_GATEWAY_PORT:-4000}
+      - PRICING_SERVICE_URL=http://pricing-service:4001
+      - RECOMMENDATION_SERVICE_URL=http://recommendation-service:4002
+      - PROVIDER_SERVICE_URL=http://provider-service:4003
+      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
+    depends_on:
+      - pricing-service
+      - recommendation-service
+      - provider-service
+      - cache-db
+    networks:
+      - app-network
+
+  # Pricing Service
+  pricing-service:
+    build:
+      context: ./services/pricing-service
+      dockerfile: Dockerfile
+    ports:
+      - "4001:4001"
+    volumes:
+      - ./services/pricing-service:/app
+      - ./data/pricing:/app/data
+      - /app/node_modules
+    environment:
+      - PORT=${PRICING_SERVICE_PORT:-4001}
+      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
+      - USE_REAL_PRICING_APIS=${USE_REAL_PRICING_APIS:-true}
+      - FALLBACK_TO_LOCAL_PRICING=${FALLBACK_TO_LOCAL_PRICING:-true}
+      - PRICING_CACHE_TTL=${PRICING_CACHE_TTL:-86400}
+    depends_on:
+      - cache-db
+    networks:
+      - app-network
+
+  # Recommendation Service
+  recommendation-service:
+    build:
+      context: ./services/recommendation-service
+      dockerfile: Dockerfile
+    ports:
+      - "4002:4002"
+    volumes:
+      - ./services/recommendation-service:/app
+      - /app/node_modules
+    environment:
+      - PORT=${RECOMMENDATION_SERVICE_PORT:-4002}
+      - PRICING_SERVICE_URL=http://pricing-service:4001
+      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
+    depends_on:
+      - pricing-service
+      - cache-db
+    networks:
+      - app-network
+
+  # Provider Service
+  provider-service:
+    build:
+      context: ./services/provider-service
+      dockerfile: Dockerfile
+    ports:
+      - "4003:4003"
+    volumes:
+      - ./services/provider-service:/app
+      - ./data/pricing:/app/data
+      - /app/node_modules
+    environment:
+      - PORT=${PROVIDER_SERVICE_PORT:-4003}
+      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
+    depends_on:
+      - cache-db
+    networks:
+      - app-network
+
+  # Redis Cache
+  cache-db:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  redis-data:

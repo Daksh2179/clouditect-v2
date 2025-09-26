@@ -1,0 +1,94 @@
+{
+  "aws": {
+    "rds_mysql_t3_small": {
+      "hourly": 0.034,
+      "monthly": 24.82
+    },
+    "dynamodb": {
+      "monthly_per_gb": 0.25,
+      "read_capacity_unit": 0.00025,
+      "write_capacity_unit": 0.00125
+    }
+  },
+  "azure": {
+    "mysql_b_gen5_1": {
+      "hourly": 0.036,
+      "monthly": 26.28
+    },
+    "cosmos_db": {
+      "monthly_per_gb": 0.25,
+      "request_unit": 0.008
+    }
+  },
+  "gcp": {
+    "cloud_sql_mysql_db_f1_micro": {
+      "hourly": 0.0105,
+      "monthly": 7.67
+    },
+    "firestore": {
+      "monthly_per_gb": 0.18,
+      "read": 0.06,
+      "write": 0.18
+    }
+  },
+  "ibm": {
+    "db2_small": {
+      "hourly": 0.0396,
+      "monthly": 28.91,
+      "details": {
+        "cpu": "2 vCPU",
+        "memory": "8 GB",
+        "storage": "20 GB included"
+      }
+    },
+    "cloudant": {
+      "monthly_per_gb": 0.21,
+      "read": 0.00005,
+      "write": 0.0001,
+      "details": {
+        "global_distribution": true,
+        "multi_master": true
+      }
+    }
+  },
+  "oracle": {
+    "mysql_basic": {
+      "hourly": 0.028,
+      "monthly": 20.44,
+      "details": {
+        "cpu": "1 OCPU",
+        "memory": "8 GB",
+        "storage": "50 GB included"
+      }
+    },
+    "autonomous_transaction": {
+      "hourly": 0.06,
+      "monthly": 43.8,
+      "details": {
+        "self_tuning": true,
+        "self_securing": true,
+        "oracle_features": "full access"
+      }
+    }
+  },
+  "alibaba": {
+    "rds_mysql_basic": {
+      "hourly": 0.025,
+      "monthly": 18.25,
+      "details": {
+        "cpu": "2 vCPU",
+        "memory": "4 GB",
+        "storage": "20 GB included"
+      }
+    },
+    "tablestore": {
+      "monthly_per_gb": 0.23,
+      "read_cu": 0.0002,
+      "write_cu": 0.0015,
+      "details": {
+        "global_index": true,
+        "search_capability": true
+      }
+    }
+  }
+}

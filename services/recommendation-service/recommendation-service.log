@@ -1,0 +1,23 @@
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-08T20:27:56.380Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-08T20:46:07.197Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-08T20:50:07.910Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-08T20:55:32.713Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/generate","requestId":"mcv0g8k7rqm60tv99fo"},"timestamp":"2025-07-08T20:56:47.240Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/generate","requestId":"mcv0hfthcyjcatrzkm"},"timestamp":"2025-07-08T20:57:43.263Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/generate","requestId":"mcv0jc4we4vcf7ss3o"},"timestamp":"2025-07-08T20:59:11.798Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-09T22:50:01.568Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-09T22:53:09.249Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/generate","requestId":"mcwk300myjkkzbqha8d"},"timestamp":"2025-07-09T22:54:08.137Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/generate","requestId":"mcwlqvoe47o8ez69gjk"},"timestamp":"2025-07-09T23:40:41.886Z"}
+{"level":"info","message":"Returning cached recommendations","requestId":"mcwlqvoe47o8ez69gjk","timestamp":"2025-07-09T23:40:41.901Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-10T20:50:35.243Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-10T21:01:16.274Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-10T21:10:27.093Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-10T23:37:18.836Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-11T20:11:17.774Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-11T20:26:07.857Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-11T21:18:28.647Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-12T19:43:49.685Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-12T19:53:12.454Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-12T20:21:17.432Z"}
+{"level":"info","message":"Recommendation Service listening on port 4002","timestamp":"2025-07-13T22:03:21.559Z"}

@@ -1,0 +1,48 @@
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-08T20:27:56.079Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-08T20:27:56.112Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-08T20:46:07.228Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-08T20:46:07.242Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-08T20:50:07.601Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-08T20:50:07.626Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-08T20:55:32.462Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-08T20:55:32.486Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/calculate","requestId":"mcv0g848ho0hhzor6b"},"timestamp":"2025-07-08T20:56:46.668Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.5","method":"POST","path":"/calculate","requestId":"mcv0g8meffufmuxvrvo"},"timestamp":"2025-07-08T20:56:47.270Z"}
+{"level":"info","message":"Returning cached pricing result","requestId":"mcv0g8meffufmuxvrvo","timestamp":"2025-07-08T20:56:47.273Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/calculate","requestId":"mcv0hfka7mpkkxcbg6i"},"timestamp":"2025-07-08T20:57:42.929Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.5","method":"POST","path":"/calculate","requestId":"mcv0hfu4oxnj91v4q7"},"timestamp":"2025-07-08T20:57:43.277Z"}
+{"level":"info","message":"Returning cached pricing result","requestId":"mcv0hfu4oxnj91v4q7","timestamp":"2025-07-08T20:57:43.280Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/calculate","requestId":"mcv0jbtqkmro74zvf4"},"timestamp":"2025-07-08T20:59:11.396Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.5","method":"POST","path":"/calculate","requestId":"mcv0jc5b74kg0o8x3v4"},"timestamp":"2025-07-08T20:59:11.807Z"}
+{"level":"info","message":"Returning cached pricing result","requestId":"mcv0jc5b74kg0o8x3v4","timestamp":"2025-07-08T20:59:11.808Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-09T22:50:01.639Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-09T22:50:01.662Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-09T22:53:08.885Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-09T22:53:08.905Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/calculate","requestId":"mcwk2zpdzq2rg7rh1ti"},"timestamp":"2025-07-09T22:54:07.743Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.5","method":"POST","path":"/calculate","requestId":"mcwk302uhslg7i3wazb"},"timestamp":"2025-07-09T22:54:08.166Z"}
+{"level":"info","message":"Returning cached pricing result","requestId":"mcwk302uhslg7i3wazb","timestamp":"2025-07-09T22:54:08.169Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"POST","path":"/calculate","requestId":"mcwlqvldtp1lylnxufg"},"timestamp":"2025-07-09T23:40:41.777Z"}
+{"level":"info","message":"Returning cached pricing result","requestId":"mcwlqvldtp1lylnxufg","timestamp":"2025-07-09T23:40:41.795Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T20:50:34.928Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-10T20:50:34.953Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T21:01:15.982Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-10T21:01:15.995Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T21:10:26.706Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-10T21:10:26.726Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T23:37:18.835Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-10T23:37:18.873Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T20:11:17.771Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-11T20:11:17.797Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T20:26:07.774Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-11T20:26:07.797Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T21:18:28.608Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-11T21:18:28.629Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T19:43:49.748Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-12T19:43:49.759Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T19:53:12.146Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-12T19:53:12.177Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T20:21:17.412Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-12T20:21:17.429Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-13T22:03:21.638Z"}
+{"level":"info","message":"Pricing Service listening on port 4001","timestamp":"2025-07-13T22:03:21.654Z"}

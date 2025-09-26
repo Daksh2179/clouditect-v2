@@ -1,0 +1,34 @@
+{
+  "eastus": {
+    "B1S": {
+      "hourly": 0.0104,
+      "monthly": 7.59,
+      "vcpu": 1,
+      "memory": 1
+    },
+    "B2S": {
+      "hourly": 0.0416,
+      "monthly": 30.37,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "D2s_v3": {
+      "hourly": 0.096,
+      "monthly": 70.08,
+      "vcpu": 2,
+      "memory": 8
+    },
+    "F2s_v2": {
+      "hourly": 0.085,
+      "monthly": 62.05,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "E2s_v3": {
+      "hourly": 0.126,
+      "monthly": 91.98,
+      "vcpu": 2,
+      "memory": 16
+    }
+  }
+}

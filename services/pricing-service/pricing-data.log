@@ -1,0 +1,66 @@
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-10T20:50:34.769Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T20:50:34.780Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-10T20:50:34.807Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-10T20:50:34.809Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T20:50:34.811Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T20:50:34.927Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-10T21:01:15.935Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T21:01:15.942Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-10T21:01:15.952Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-10T21:01:15.953Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T21:01:15.955Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T21:01:15.981Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-10T21:10:26.657Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T21:10:26.666Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-10T21:10:26.676Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-10T21:10:26.677Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T21:10:26.678Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T21:10:26.706Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-10T23:37:18.749Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T23:37:18.766Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-10T23:37:18.785Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-10T23:37:18.787Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-10T23:37:18.788Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-10T23:37:18.833Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-11T20:11:17.709Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T20:11:17.720Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-11T20:11:17.737Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-11T20:11:17.738Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T20:11:17.739Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T20:11:17.770Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-11T20:26:07.619Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T20:26:07.634Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-11T20:26:07.645Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-11T20:26:07.649Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T20:26:07.651Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T20:26:07.773Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-11T21:18:28.539Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T21:18:28.546Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-11T21:18:28.559Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-11T21:18:28.560Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-11T21:18:28.561Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-11T21:18:28.607Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-12T19:43:49.646Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T19:43:49.652Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-12T19:43:49.664Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-12T19:43:49.665Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T19:43:49.665Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T19:43:49.747Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-12T19:53:12.079Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T19:53:12.091Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-12T19:53:12.105Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-12T19:53:12.107Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T19:53:12.108Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T19:53:12.145Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-12T20:21:17.282Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T20:21:17.291Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-12T20:21:17.304Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-12T20:21:17.305Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-12T20:21:17.306Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-12T20:21:17.411Z"}
+{"level":"info","message":"Checking if pricing data exists...","timestamp":"2025-07-13T22:03:21.530Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-13T22:03:21.539Z"}
+{"level":"info","message":"All pricing data files already exist","timestamp":"2025-07-13T22:03:21.550Z"}
+{"level":"info","message":"Loading pricing data...","timestamp":"2025-07-13T22:03:21.551Z"}
+{"level":"info","message":"Found data directory at: /app/data","timestamp":"2025-07-13T22:03:21.553Z"}
+{"level":"info","message":"Pricing data loaded successfully","timestamp":"2025-07-13T22:03:21.637Z"}

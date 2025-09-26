@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-gray-50;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* Custom utility classes */
+.section-title {
+  @apply text-xl font-semibold text-gray-800 mb-4;
+}
+
+.card {
+  @apply bg-white p-6 rounded-lg shadow-md;
+}
+
+.btn-primary {
+  @apply bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out;
+}
+
+.btn-secondary {
+  @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out;
+}
+
+.input-field {
+  @apply w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent;
+}
+
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.aws-bg {
+  @apply bg-aws text-white;
+}
+
+.azure-bg {
+  @apply bg-azure text-white;
+}
+
+.gcp-bg {
+  @apply bg-gcp text-white;
+}
+
+/* Add these to your index.css file */
+
+/* Provider Colors */
+.text-aws {
+  color: #FF9900;
+}
+
+.text-azure {
+  color: #0089D6;
+}
+
+.text-gcp {
+  color: #4285F4;
+}
+
+.bg-aws {
+  background-color: #FF9900;
+}
+
+.bg-azure {
+  background-color: #0089D6;
+}
+
+.bg-gcp {
+  background-color: #4285F4;
+}
+
+/* Additional provider colors */
+.text-oracle {
+  color: #F80000;
+}
+
+.text-ibm {
+  color: #0F62FE;
+}
+
+.text-alibaba {
+  color: #FF6A00;
+}
+
+.bg-oracle {
+  background-color: #F80000;
+}
+
+.bg-ibm {
+  background-color: #0F62FE;
+}
+
+.bg-alibaba {
+  background-color: #FF6A00;
+}
+
+/* Button Styles */
+.btn-primary {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-gray-100 text-gray-800 border border-gray-300 rounded-md hover:bg-gray-200 focus:outline-none;
+}
+
+.btn-outline {
+  @apply px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none;
+}
+
+/* Card Styles */
+.card {
+  @apply bg-white p-6 rounded-lg border border-gray-200 shadow-sm;
+}
+
+/* Form Styles */
+.form-label {
+  @apply block text-sm font-medium text-gray-700 mb-1;
+}
+
+.input-field {
+  @apply mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm;
+}
+
+.form-checkbox {
+  @apply h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500;
+}
+
+.form-radio {
+  @apply h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-500;
+}
+
+/* Clouditect theme colors */
+:root {
+  --clouditect-primary: #4361ee;
+  --clouditect-secondary: #3f37c9;
+  --clouditect-accent: #4cc9f0;
+  --clouditect-business: #4895ef;
+  --clouditect-developer: #560bad;
+}
+
+.btn-business {
+  @apply px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none;
+}
+
+.btn-developer {
+  @apply px-4 py-2 bg-purple-700 text-white rounded-md hover:bg-purple-800 focus:outline-none;
+}

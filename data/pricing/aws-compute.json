@@ -1,0 +1,46 @@
+{
+  "us-east-1": {
+    "t2.micro": {
+      "hourly": 0.0116,
+      "monthly": 8.47,
+      "vcpu": 1,
+      "memory": 1
+    },
+    "t2.small": {
+      "hourly": 0.023,
+      "monthly": 16.79,
+      "vcpu": 1,
+      "memory": 2
+    },
+    "t2.medium": {
+      "hourly": 0.0464,
+      "monthly": 33.87,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "t2.large": {
+      "hourly": 0.0928,
+      "monthly": 67.74,
+      "vcpu": 2,
+      "memory": 8
+    },
+    "m5.large": {
+      "hourly": 0.096,
+      "monthly": 70.08,
+      "vcpu": 2,
+      "memory": 8
+    },
+    "c5.large": {
+      "hourly": 0.085,
+      "monthly": 62.05,
+      "vcpu": 2,
+      "memory": 4
+    },
+    "r5.large": {
+      "hourly": 0.126,
+      "monthly": 91.98,
+      "vcpu": 2,
+      "memory": 16
+    }
+  }
+}

@@ -1,0 +1,115 @@
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-08T20:27:56.038Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-08T20:46:07.144Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-08T20:50:07.602Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-08T20:55:32.436Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0f4wkkcyvtu35ubb"},"timestamp":"2025-07-08T20:55:55.832Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0f4yf1js8r83u7yk"},"timestamp":"2025-07-08T20:55:55.873Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0f4yf1js8r83u7yk","timestamp":"2025-07-08T20:55:55.875Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0feh3lhofj13g0km"},"timestamp":"2025-07-08T20:56:08.211Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0feh3lhofj13g0km","timestamp":"2025-07-08T20:56:08.220Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fehybnvqnolguxj"},"timestamp":"2025-07-08T20:56:08.247Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fehybnvqnolguxj","timestamp":"2025-07-08T20:56:08.254Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fgqc67rzjmfyt0b"},"timestamp":"2025-07-08T20:56:11.146Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fgqc67rzjmfyt0b","timestamp":"2025-07-08T20:56:11.149Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fgrd38e0fq5hpxx"},"timestamp":"2025-07-08T20:56:11.170Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fgrd38e0fq5hpxx","timestamp":"2025-07-08T20:56:11.175Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fhshh8ovrw5mzgf"},"timestamp":"2025-07-08T20:56:12.503Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fhshh8ovrw5mzgf","timestamp":"2025-07-08T20:56:12.505Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fht2gxz6l0vktxa"},"timestamp":"2025-07-08T20:56:12.532Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fht2gxz6l0vktxa","timestamp":"2025-07-08T20:56:12.535Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0figvhycue2yaw86"},"timestamp":"2025-07-08T20:56:13.383Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0figvhycue2yaw86","timestamp":"2025-07-08T20:56:13.386Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0fihfogr6uzd3yt"},"timestamp":"2025-07-08T20:56:13.404Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0fihfogr6uzd3yt","timestamp":"2025-07-08T20:56:13.407Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0gu8hgepvtw58nxb"},"timestamp":"2025-07-08T20:57:15.293Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0gu8hgepvtw58nxb","timestamp":"2025-07-08T20:57:15.297Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0gu9d0ksgbybu5al9"},"timestamp":"2025-07-08T20:57:15.326Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0gu9d0ksgbybu5al9","timestamp":"2025-07-08T20:57:15.328Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0gua9myteu05c14"},"timestamp":"2025-07-08T20:57:15.366Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0gua9myteu05c14","timestamp":"2025-07-08T20:57:15.372Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h2ex8dkn5ucebcm"},"timestamp":"2025-07-08T20:57:25.892Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h2ex8dkn5ucebcm","timestamp":"2025-07-08T20:57:25.894Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h2fjuv2bj2i8cei"},"timestamp":"2025-07-08T20:57:25.910Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h2fjuv2bj2i8cei","timestamp":"2025-07-08T20:57:25.913Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h4cu1p59gauz8cg"},"timestamp":"2025-07-08T20:57:28.404Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h4cu1p59gauz8cg","timestamp":"2025-07-08T20:57:28.407Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h4dx6qvd8rk9a0a"},"timestamp":"2025-07-08T20:57:28.448Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h4dx6qvd8rk9a0a","timestamp":"2025-07-08T20:57:28.450Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h58u9fixpmc2qed"},"timestamp":"2025-07-08T20:57:29.556Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h58u9fixpmc2qed","timestamp":"2025-07-08T20:57:29.558Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0h5a2zml7vkjrwbb"},"timestamp":"2025-07-08T20:57:29.605Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0h5a2zml7vkjrwbb","timestamp":"2025-07-08T20:57:29.607Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0implfw2wnbwhdfb"},"timestamp":"2025-07-08T20:58:38.853Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0implfw2wnbwhdfb","timestamp":"2025-07-08T20:58:38.855Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0imqba0m8eom7oiq"},"timestamp":"2025-07-08T20:58:38.873Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0imqba0m8eom7oiq","timestamp":"2025-07-08T20:58:38.874Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcv0imqw9nbls3jf9fb"},"timestamp":"2025-07-08T20:58:38.908Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcv0imqw9nbls3jf9fb","timestamp":"2025-07-08T20:58:38.910Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-09T22:50:01.578Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-09T22:53:08.899Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk3asxwgwz5ejficq"},"timestamp":"2025-07-09T22:54:22.097Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk3auw1g3ik9wqd0s"},"timestamp":"2025-07-09T22:54:22.144Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk3auw1g3ik9wqd0s","timestamp":"2025-07-09T22:54:22.147Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk3avi3pvh9y9s948"},"timestamp":"2025-07-09T22:54:22.166Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk3avi3pvh9y9s948","timestamp":"2025-07-09T22:54:22.171Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk57pnw57fqv5yjum"},"timestamp":"2025-07-09T22:55:51.381Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk57pnw57fqv5yjum","timestamp":"2025-07-09T22:55:51.384Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk57r3hohkj4mvwci"},"timestamp":"2025-07-09T22:55:51.431Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk57r3hohkj4mvwci","timestamp":"2025-07-09T22:55:51.434Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk58ijak7bbw26kz5"},"timestamp":"2025-07-09T22:55:52.419Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk58ijak7bbw26kz5","timestamp":"2025-07-09T22:55:52.421Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk58jxbmkzciilhd"},"timestamp":"2025-07-09T22:55:52.494Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk58jxbmkzciilhd","timestamp":"2025-07-09T22:55:52.496Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk591av3huum17nh"},"timestamp":"2025-07-09T22:55:53.092Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk591av3huum17nh","timestamp":"2025-07-09T22:55:53.099Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk593yih5ybbfufli"},"timestamp":"2025-07-09T22:55:53.196Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk593yih5ybbfufli","timestamp":"2025-07-09T22:55:53.200Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk59ecitlujz5llhd"},"timestamp":"2025-07-09T22:55:53.566Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk59ecitlujz5llhd","timestamp":"2025-07-09T22:55:53.569Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk59g0c63xxtwolie"},"timestamp":"2025-07-09T22:55:53.625Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk59g0c63xxtwolie","timestamp":"2025-07-09T22:55:53.631Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk59w8j421pmk2kp"},"timestamp":"2025-07-09T22:55:54.210Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk59w8j421pmk2kp","timestamp":"2025-07-09T22:55:54.213Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk59xi69nnzci7dng"},"timestamp":"2025-07-09T22:55:54.256Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk59xi69nnzci7dng","timestamp":"2025-07-09T22:55:54.266Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5afsi9o4x5687or"},"timestamp":"2025-07-09T22:55:54.913Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5afsi9o4x5687or","timestamp":"2025-07-09T22:55:54.917Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5ah63e1w3xbs0tf"},"timestamp":"2025-07-09T22:55:54.963Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5ah63e1w3xbs0tf","timestamp":"2025-07-09T22:55:54.966Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5az7dnorq3vbnn6"},"timestamp":"2025-07-09T22:55:55.609Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5az7dnorq3vbnn6","timestamp":"2025-07-09T22:55:55.612Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5b0fv1tmgszwb5o"},"timestamp":"2025-07-09T22:55:55.652Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5b0fv1tmgszwb5o","timestamp":"2025-07-09T22:55:55.655Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5bi33tekh9hf9ad"},"timestamp":"2025-07-09T22:55:56.291Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5bi33tekh9hf9ad","timestamp":"2025-07-09T22:55:56.293Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk5bkp0weex6tipnz8"},"timestamp":"2025-07-09T22:55:56.386Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk5bkp0weex6tipnz8","timestamp":"2025-07-09T22:55:56.388Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk6scc2r1mxhh2vvl"},"timestamp":"2025-07-09T22:57:04.769Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk6scc2r1mxhh2vvl","timestamp":"2025-07-09T22:57:04.771Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk6sdrtwdofvg251e"},"timestamp":"2025-07-09T22:57:04.823Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk6sdrtwdofvg251e","timestamp":"2025-07-09T22:57:04.826Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk6szpdfciv4m3g9"},"timestamp":"2025-07-09T22:57:05.610Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk6szpdfciv4m3g9","timestamp":"2025-07-09T22:57:05.611Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwk6t0zfbfnz9obnu5"},"timestamp":"2025-07-09T22:57:05.656Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwk6t0zfbfnz9obnu5","timestamp":"2025-07-09T22:57:05.658Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwlqlokza9av4iow8p"},"timestamp":"2025-07-09T23:40:28.963Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwlqlokza9av4iow8p","timestamp":"2025-07-09T23:40:28.978Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcwlqlshm89luyy2f4"},"timestamp":"2025-07-09T23:40:29.019Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcwlqlshm89luyy2f4","timestamp":"2025-07-09T23:40:29.022Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcxtm8qqkz0zlmit6v"},"timestamp":"2025-07-10T20:08:48.624Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcxtm8qqkz0zlmit6v","timestamp":"2025-07-10T20:08:48.627Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcxtm8sp9xrdblumuoi"},"timestamp":"2025-07-10T20:08:48.671Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcxtm8sp9xrdblumuoi","timestamp":"2025-07-10T20:08:48.677Z"}
+{"level":"info","message":{"ip":"::ffff:172.18.0.6","method":"GET","path":"/list","requestId":"mcxtm8ui0cedv6g1b4ss"},"timestamp":"2025-07-10T20:08:48.750Z"}
+{"level":"info","message":"Returning cached provider list","requestId":"mcxtm8ui0cedv6g1b4ss","timestamp":"2025-07-10T20:08:48.769Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-10T20:50:34.881Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-10T21:01:15.936Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-10T21:10:26.655Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-10T23:37:18.856Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-11T20:11:17.718Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-11T20:26:07.693Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-11T21:18:28.563Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-12T19:43:49.675Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-12T19:53:12.069Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-12T20:21:17.317Z"}
+{"level":"info","message":"Provider Service listening on port 4003","timestamp":"2025-07-13T22:03:21.550Z"}
