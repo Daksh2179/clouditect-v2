@@ -1,12 +1,12 @@
+// frontend/src/components/business/FinancialAnalysis.js
 import React, { useState } from 'react';
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line, BarChart, Bar } from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, BarChart, Bar } from 'recharts';
 
 const FinancialAnalysis = ({ pricing, workload }) => {
   const [timeframe, setTimeframe] = useState('3year'); // 1year, 3year, 5year
   
   if (!pricing) return null;
   
-  // Provider color map and names
   const providerColors = {
     aws: '#FF9900',
     azure: '#00a4d6ff',
@@ -28,23 +28,19 @@ const FinancialAnalysis = ({ pricing, workload }) => {
     digitalocean: 'DigitalOcean'
   };
   
-  // Get expected growth rate
   const growthRate = workload.businessMetrics?.expectedGrowth || 'moderate';
   
-  // Define monthly growth factors based on growth rate
   const monthlyGrowthFactor = {
-    low: 1.01,      // ~12% annual
-    moderate: 1.03, // ~42% annual
-    high: 1.05,     // ~80% annual
-    rapid: 1.10     // ~213% annual
+    low: 1.01,
+    moderate: 1.03,
+    high: 1.05,
+    rapid: 1.10
   }[growthRate];
   
-  // Prepare cost forecast data
   const generateForecastData = () => {
     const months = [];
     const now = new Date();
     
-    // Determine months to show based on timeframe
     const numMonths = timeframe === '1year' ? 12 : timeframe === '3year' ? 36 : 60;
     
     for (let i = 0; i < numMonths; i++) {
@@ -56,13 +52,11 @@ const FinancialAnalysis = ({ pricing, workload }) => {
       });
     }
     
-    // Add cost projections
     return months.map(month => {
       const result = { ...month };
       
       Object.keys(pricing).forEach(provider => {
         if (pricing[provider]) {
-          // Calculate growth based on selected growth rate
           result[provider] = Math.round(pricing[provider].total * Math.pow(monthlyGrowthFactor, month.month) * 100) / 100;
         }
       });
@@ -73,7 +67,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
   
   const forecastData = generateForecastData();
   
-  // Calculate 1/3/5 year totals
   const calculateTotalCosts = () => {
     const result = {};
     
@@ -88,7 +81,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
           fiveYear: monthly * 60
         };
         
-        // Apply growth rates for more accurate projections
         let accumulatedCost = 0;
         for (let i = 0; i < 60; i++) {
           const monthCost = monthly * Math.pow(monthlyGrowthFactor, i);
@@ -97,7 +89,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
           result[provider].fiveYearGrowth = (result[provider].fiveYearGrowth || 0) + monthCost;
         }
         
-        // Round values
         result[provider].annualGrowth = Math.round(result[provider].annualGrowth);
         result[provider].threeYearGrowth = Math.round(result[provider].threeYearGrowth);
         result[provider].fiveYearGrowth = Math.round(result[provider].fiveYearGrowth);
@@ -109,7 +100,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
   
   const totalCosts = calculateTotalCosts();
   
-  // Find cheapest provider
   const getProviderRanking = () => {
     return Object.keys(pricing)
       .filter(provider => pricing[provider])
@@ -119,7 +109,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
   const rankedProviders = getProviderRanking();
   const cheapestProvider = rankedProviders[0];
   
-  // Calculate per-customer costs
   const getUserMetrics = () => {
     if (!workload.businessMetrics?.userTraffic) return null;
     
@@ -144,7 +133,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
     <div className="bg-white rounded-lg shadow-sm p-6 mt-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Financial Analysis</h2>
       
-      {/* TCO Analysis */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-medium text-gray-700">Total Cost of Ownership</h3>
@@ -280,7 +268,7 @@ const FinancialAnalysis = ({ pricing, workload }) => {
                 <BarChart
                   data={[
                     { name: 'Single Cloud', value: totalCosts[cheapestProvider].threeYearGrowth },
-                    { name: 'Multi-Cloud', value: totalCosts[cheapestProvider].threeYearGrowth * 1.15 } // Simulated 15% overhead
+                    { name: 'Multi-Cloud', value: totalCosts[cheapestProvider].threeYearGrowth * 1.15 }
                   ]}
                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                 >
@@ -299,7 +287,6 @@ const FinancialAnalysis = ({ pricing, workload }) => {
         )}
       </div>
       
-      {/* Per-Customer Metrics */}
       {userMetrics && (
         <div className="mt-8">
           <h3 className="text-lg font-medium text-gray-700 mb-3">Cost Per User Metrics</h3>

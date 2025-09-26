@@ -90,5 +90,19 @@
         "search_capability": true
       }
     }
+  },
+  "digitalocean": {
+    "managed-mysql": {
+        "db-s-1vcpu-1gb": {
+            "hourly": 0.02232,
+            "monthly": 15
+        }
+    },
+    "managed-redis": {
+        "db-s-1vcpu-1gb": {
+            "hourly": 0.02232,
+            "monthly": 15
+        }
+    }
   }
 }

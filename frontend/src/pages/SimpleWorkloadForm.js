@@ -84,7 +84,9 @@ const SimpleWorkloadForm = () => {
         ...baseTemplate,
         name: `${baseTemplate.name} (${scale} scale)`,
         preferred_provider: preferredProvider,
+// START MODIFICATION
         deploymentStrategy: workload.deploymentStrategy,
+// END MODIFICATION
         compute: baseTemplate.compute.map(vm => ({
           ...vm,
           quantity: Math.max(1, Math.round(vm.quantity * scaleFactor[scale]))
@@ -97,28 +99,24 @@ const SimpleWorkloadForm = () => {
           ...db,
           quantity: Math.max(1, Math.round(db.quantity * scaleFactor[scale]))
         })),
-        // Include networking if present in template
         networking: baseTemplate.networking 
           ? baseTemplate.networking.map(net => ({
               ...net,
               dataTransferGB: Math.round(net.dataTransferGB * scaleFactor[scale])
             }))
           : [],
-        // Include serverless if present in template
         serverless: baseTemplate.serverless 
           ? baseTemplate.serverless.map(fn => ({
               ...fn,
               executionsPerMonth: Math.round(fn.executionsPerMonth * scaleFactor[scale])
             }))
           : [],
-        // Include managed services if present in template
         managedServices: baseTemplate.managedServices 
           ? baseTemplate.managedServices.map(svc => ({
               ...svc,
               quantity: Math.max(1, Math.round(svc.quantity * scaleFactor[scale]))
             }))
           : [],
-        // Include region
         region: {
           aws: workload.region?.aws || 'us-east-1',
           azure: workload.region?.azure || 'eastus',
@@ -132,27 +130,22 @@ const SimpleWorkloadForm = () => {
       
       console.log('Final workload configuration:', scaledWorkload);
       
-      // Update workload in context
       updateWorkload(scaledWorkload);
       
       try {
         console.log('Calculating pricing...');
-        // Calculate pricing
         const pricingResponse = await apiService.calculatePricing(scaledWorkload);
         console.log('Pricing response:', pricingResponse.data);
         setPricing(pricingResponse.data);
         
         console.log('Getting recommendations...');
-        // Get recommendations
         const recommendationsResponse = await apiService.getRecommendations(scaledWorkload);
         console.log('Recommendations response:', recommendationsResponse.data);
         setRecommendations(recommendationsResponse.data);
       } catch (apiError) {
         console.error('API Error:', apiError);
-        // Even with API errors, we'll continue and navigate to dashboard
       }
       
-      // Navigate to dashboard
       console.log('Navigating to dashboard...');
       navigate('/');
     } catch (err) {
@@ -163,7 +156,6 @@ const SimpleWorkloadForm = () => {
     }
   };
 
-  // Helper function to explain templates
   const getTemplateDescription = (templateName) => {
     if (!templateName) return "";
     
@@ -270,132 +262,128 @@ const SimpleWorkloadForm = () => {
               </div>
 {/* END MODIFICATION */}
               
-{/* Business Type Selection */}
-<div className="mb-6">
-  <label className="form-label">Business Type</label>
-  <select 
-    className="input-field"
-    value={workload.businessType || 'general'}
-    onChange={(e) => updateWorkload({ businessType: e.target.value })}
-  >
-    <option value="general">General Business</option>
-    <option value="ecommerce">E-commerce / Retail</option>
-    <option value="finance">Financial Services</option>
-    <option value="healthcare">Healthcare</option>
-    <option value="media">Media & Entertainment</option>
-    <option value="manufacturing">Manufacturing</option>
-    <option value="education">Education</option>
-    <option value="government">Government / Public Sector</option>
-  </select>
-  <p className="mt-1 text-sm text-gray-500">
-    This helps us provide industry-specific recommendations
-  </p>
-</div>
+              <div className="mb-6">
+                <label className="form-label">Business Type</label>
+                <select 
+                  className="input-field"
+                  value={workload.businessType || 'general'}
+                  onChange={(e) => updateWorkload({ businessType: e.target.value })}
+                >
+                  <option value="general">General Business</option>
+                  <option value="ecommerce">E-commerce / Retail</option>
+                  <option value="finance">Financial Services</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="media">Media & Entertainment</option>
+                  <option value="manufacturing">Manufacturing</option>
+                  <option value="education">Education</option>
+                  <option value="government">Government / Public Sector</option>
+                </select>
+                <p className="mt-1 text-sm text-gray-500">
+                  This helps us provide industry-specific recommendations
+                </p>
+              </div>
 
-{/* Compliance Requirements */}
-<div className="mb-6">
-  <label className="form-label">Compliance Requirements</label>
-  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mt-2">
-    {['GDPR', 'HIPAA', 'PCI DSS', 'SOC2', 'ISO 27001', 'FedRAMP'].map(compliance => {
-      const isSelected = (workload.complianceRequirements || []).includes(compliance);
-      return (
-        <button
-          key={compliance}
-          type="button"
-          className={`px-3 py-2 text-sm font-medium rounded border ${
-            isSelected 
-              ? 'bg-blue-50 border-blue-300 text-blue-700' 
-              : 'border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
-          onClick={() => {
-            const current = [...(workload.complianceRequirements || [])];
-            if (isSelected) {
-              updateWorkload({ 
-                complianceRequirements: current.filter(c => c !== compliance) 
-              });
-            } else {
-              updateWorkload({ 
-                complianceRequirements: [...current, compliance] 
-              });
-            }
-          }}
-        >
-          {compliance}
-        </button>
-      );
-    })}
-  </div>
-  <p className="mt-1 text-sm text-gray-500">
-    Select any compliance standards that your cloud infrastructure must adhere to
-  </p>
-</div>
+              <div className="mb-6">
+                <label className="form-label">Compliance Requirements</label>
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mt-2">
+                  {['GDPR', 'HIPAA', 'PCI DSS', 'SOC2', 'ISO 27001', 'FedRAMP'].map(compliance => {
+                    const isSelected = (workload.complianceRequirements || []).includes(compliance);
+                    return (
+                      <button
+                        key={compliance}
+                        type="button"
+                        className={`px-3 py-2 text-sm font-medium rounded border ${
+                          isSelected 
+                            ? 'bg-blue-50 border-blue-300 text-blue-700' 
+                            : 'border-gray-300 text-gray-700 hover:bg-gray-50'
+                        }`}
+                        onClick={() => {
+                          const current = [...(workload.complianceRequirements || [])];
+                          if (isSelected) {
+                            updateWorkload({ 
+                              complianceRequirements: current.filter(c => c !== compliance) 
+                            });
+                          } else {
+                            updateWorkload({ 
+                              complianceRequirements: [...current, compliance] 
+                            });
+                          }
+                        }}
+                      >
+                        {compliance}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="mt-1 text-sm text-gray-500">
+                  Select any compliance standards that your cloud infrastructure must adhere to
+                </p>
+              </div>
 
-{/* Business Metrics */}
-<div className="mb-6">
-  <label className="form-label">Business Growth Projection</label>
-  <select 
-    className="input-field"
-    value={workload.businessMetrics?.expectedGrowth || 'moderate'}
-    onChange={(e) => updateWorkload({
-      businessMetrics: {
-        ...(workload.businessMetrics || {}),
-        expectedGrowth: e.target.value
-      }
-    })}
-  >
-    <option value="low">Low Growth (0-20% yearly)</option>
-    <option value="moderate">Moderate Growth (20-50% yearly)</option>
-    <option value="high">High Growth (50-100% yearly)</option>
-    <option value="rapid">Rapid Growth (100%+ yearly)</option>
-  </select>
-  <p className="mt-1 text-sm text-gray-500">
-    This helps us forecast future costs and recommend the right scaling strategy
-  </p>
-</div>
+              <div className="mb-6">
+                <label className="form-label">Business Growth Projection</label>
+                <select 
+                  className="input-field"
+                  value={workload.businessMetrics?.expectedGrowth || 'moderate'}
+                  onChange={(e) => updateWorkload({
+                    businessMetrics: {
+                      ...(workload.businessMetrics || {}),
+                      expectedGrowth: e.target.value
+                    }
+                  })}
+                >
+                  <option value="low">Low Growth (0-20% yearly)</option>
+                  <option value="moderate">Moderate Growth (20-50% yearly)</option>
+                  <option value="high">High Growth (50-100% yearly)</option>
+                  <option value="rapid">Rapid Growth (100%+ yearly)</option>
+                </select>
+                <p className="mt-1 text-sm text-gray-500">
+                  This helps us forecast future costs and recommend the right scaling strategy
+                </p>
+              </div>
 
-<div className="mb-6">
-  <label className="form-label">Monthly Budget Constraint (USD)</label>
-  <input 
-    type="number"
-    min="0"
-    placeholder="Enter your monthly budget limit"
-    className="input-field"
-    value={workload.businessMetrics?.budgetConstraint || ''}
-    onChange={(e) => updateWorkload({
-      businessMetrics: {
-        ...(workload.businessMetrics || {}),
-        budgetConstraint: e.target.value ? parseFloat(e.target.value) : ''
-      }
-    })}
-  />
-  <p className="mt-1 text-sm text-gray-500">
-    Optional: Helps us provide recommendations within your budget
-  </p>
-</div>
+              <div className="mb-6">
+                <label className="form-label">Monthly Budget Constraint (USD)</label>
+                <input 
+                  type="number"
+                  min="0"
+                  placeholder="Enter your monthly budget limit"
+                  className="input-field"
+                  value={workload.businessMetrics?.budgetConstraint || ''}
+                  onChange={(e) => updateWorkload({
+                    businessMetrics: {
+                      ...(workload.businessMetrics || {}),
+                      budgetConstraint: e.target.value ? parseFloat(e.target.value) : ''
+                    }
+                  })}
+                />
+                <p className="mt-1 text-sm text-gray-500">
+                  Optional: Helps us provide recommendations within your budget
+                </p>
+              </div>
 
-<div className="mb-6">
-  <label className="form-label">Monthly Active Users</label>
-  <input 
-    type="number"
-    min="0"
-    placeholder="Enter expected number of users"
-    className="input-field"
-    value={workload.businessMetrics?.userTraffic || ''}
-    onChange={(e) => updateWorkload({
-      businessMetrics: {
-        ...(workload.businessMetrics || {}),
-        userTraffic: e.target.value ? parseInt(e.target.value) : ''
-      }
-    })}
-  />
-  <p className="mt-1 text-sm text-gray-500">
-    Helps us calculate per-user costs and recommend appropriate sizing
-  </p>
-</div>
-              {/* Cloud Provider Selector */}
+              <div className="mb-6">
+                <label className="form-label">Monthly Active Users</label>
+                <input 
+                  type="number"
+                  min="0"
+                  placeholder="Enter expected number of users"
+                  className="input-field"
+                  value={workload.businessMetrics?.userTraffic || ''}
+                  onChange={(e) => updateWorkload({
+                    businessMetrics: {
+                      ...(workload.businessMetrics || {}),
+                      userTraffic: e.target.value ? parseInt(e.target.value) : ''
+                    }
+                  })}
+                />
+                <p className="mt-1 text-sm text-gray-500">
+                  Helps us calculate per-user costs and recommend appropriate sizing
+                </p>
+              </div>
+              
               <CloudProviderSelector onSelect={handleProviderChange} />
               
-              {/* Advanced Options Toggle */}
               <div className="mb-6">
                 <button
                   type="button"
@@ -409,7 +397,6 @@ const SimpleWorkloadForm = () => {
                 </button>
               </div>
               
-              {/* Conditional rendering of advanced options */}
               {showAdvancedOptions && (
                 <div className="mb-6 border-l-4 border-blue-200 pl-4">
                   {workload.userType === 'business' ? (
@@ -519,7 +506,6 @@ const SimpleWorkloadForm = () => {
                             </select>
                           </div>
                         )}
-// START MODIFICATION
                         {preferredProvider === 'digitalocean' && (
                             <div>
                                 <label className="form-label text-sm">DigitalOcean Region</label>
@@ -541,7 +527,6 @@ const SimpleWorkloadForm = () => {
                                 </select>
                             </div>
                         )}
-// END MODIFICATION
                       </div>
                     )}
                   </div>
@@ -643,7 +628,6 @@ const SimpleWorkloadForm = () => {
                 )}
               </div>
               
-              {/* User-specific estimation note */}
               <div className="mt-4 pt-3 border-t border-gray-200">
                 <div className="flex items-start">
                   <svg className="w-5 h-5 text-blue-500 mt-0.5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

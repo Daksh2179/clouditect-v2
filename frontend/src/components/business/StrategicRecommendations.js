@@ -1,3 +1,4 @@
+// frontend/src/components/business/StrategicRecommendations.js
 import React, { useState } from 'react';
 
 const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
@@ -5,10 +6,8 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
   
   if (!recommendations || !pricing) return null;
   
-  // Existing provider if specified
   const existingProvider = workload.existingProvider;
   
-  // Provider color map
   const providerColors = {
     aws: '#FF9900',
     azure: '#0089D6',
@@ -18,7 +17,6 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
     alibaba: '#FF6A00'
   };
   
-  // Provider display names
   const providerNames = {
     aws: 'AWS',
     azure: 'Azure',
@@ -28,7 +26,6 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
     alibaba: 'Alibaba'
   };
   
-  // Find the cheapest provider
   let cheapestProvider = null;
   let lowestCost = Infinity;
   
@@ -39,13 +36,11 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
     }
   });
   
-  // Calculate savings vs current provider
   let savingsVsCurrent = 0;
   if (existingProvider && pricing[existingProvider]) {
     savingsVsCurrent = pricing[existingProvider].total - lowestCost;
   }
   
-  // Implementation steps
   const implementationSteps = [
     {
       title: 'Resource Assessment',
@@ -99,7 +94,6 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
     }
   ];
   
-  // Competitor analysis data (simplified example)
   const competitorAnalysis = {
     ecommerce: [
       { name: 'Amazon.com', provider: 'aws', notes: 'Heavy use of custom services and proprietary technologies' },
@@ -131,13 +125,10 @@ const StrategicRecommendations = ({ recommendations, pricing, workload }) => {
     ]
   };
   
-  // Get business type or default to general
   const businessType = workload.businessType || 'general';
   
-  // Get relevant competitors
   const competitors = competitorAnalysis[businessType] || competitorAnalysis.general;
   
-  // Migration risk assessment
   const migrationRisks = [
     { 
       type: 'Downtime Risk', 

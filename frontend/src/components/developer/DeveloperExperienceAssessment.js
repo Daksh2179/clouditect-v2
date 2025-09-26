@@ -1,3 +1,4 @@
+// frontend/src/components/developer/DeveloperExperienceAssessment.js
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer } from 'recharts';
 
@@ -11,7 +12,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
     gcp: '#4285F4',
     oracle: '#F80000',
     ibm: '#0F62FE',
-    alibaba: '#FF6A00'
+    alibaba: '#FF6A00',
+    digitalocean: '#0080FF'
   };
   
   // Provider display names
@@ -21,7 +23,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
     gcp: 'GCP',
     oracle: 'Oracle',
     ibm: 'IBM',
-    alibaba: 'Alibaba'
+    alibaba: 'Alibaba',
+    digitalocean: 'DigitalOcean'
   };
   
   // Developer experience ratings
@@ -73,6 +76,14 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       'Local Development': 3.0,
       'Error Messages': 3.0,
       'Community Support': 2.8
+    },
+    digitalocean: {
+      'Documentation Quality': 4.8,
+      'SDK Maturity': 4.2,
+      'CLI Experience': 4.5,
+      'Local Development': 4.0,
+      'Error Messages': 4.0,
+      'Community Support': 4.5
     }
   };
   
@@ -84,7 +95,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4.5,
       oracle: 3.5,
       ibm: 4,
-      alibaba: 3.5
+      alibaba: 3.5,
+      digitalocean: 4.2
     },
     'Python': {
       aws: 5,
@@ -92,7 +104,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4.8,
       oracle: 3.8,
       ibm: 4,
-      alibaba: 3.5
+      alibaba: 3.5,
+      digitalocean: 4.5
     },
     'Java': {
       aws: 4.8,
@@ -100,7 +113,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4.5,
       oracle: 4.5,
       ibm: 4.2,
-      alibaba: 4
+      alibaba: 4,
+      digitalocean: 3.8
     },
     '.NET': {
       aws: 4.5,
@@ -108,7 +122,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4,
       oracle: 3.5,
       ibm: 3.8,
-      alibaba: 3.2
+      alibaba: 3.2,
+      digitalocean: 3.5
     },
     'Go': {
       aws: 4.5,
@@ -116,7 +131,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4.8,
       oracle: 3.2,
       ibm: 3.5,
-      alibaba: 3
+      alibaba: 3,
+      digitalocean: 4.6
     },
     'Ruby': {
       aws: 4,
@@ -124,7 +140,8 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       gcp: 4,
       oracle: 3,
       ibm: 3.5,
-      alibaba: 2.8
+      alibaba: 2.8,
+      digitalocean: 4.0
     }
   };
   
@@ -174,6 +191,13 @@ const DeveloperExperienceAssessment = ({ pricing, workload }) => {
       'CI/CD Integration': ['Container Registry', 'Flow Control'],
       'Infrastructure as Code': ['Resource Orchestration Service', 'Terraform provider'],
       'Monitoring & Debugging': ['CloudMonitor', 'Log Service']
+    },
+    digitalocean: {
+      'IDE Plugins': ['DigitalOcean VS Code Extension'],
+      'Local Development': ['Doctl CLI', 'Docker integration'],
+      'CI/CD Integration': ['GitHub Actions', 'DigitalOcean App Platform'],
+      'Infrastructure as Code': ['Terraform provider'],
+      'Monitoring & Debugging': ['Integrated Monitoring', 'Alert Policies']
     }
   };
   

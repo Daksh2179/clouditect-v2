@@ -76,5 +76,13 @@
         "snapshot_support": true
       }
     }
+  },
+  "digitalocean": {
+    "spaces": {
+        "monthly_per_gb": 0.02
+    },
+    "volumes": {
+        "monthly_per_gb": 0.10
+    }
   }
 }

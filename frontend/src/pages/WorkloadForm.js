@@ -27,18 +27,13 @@ const WorkloadForm = () => {
   const [providers, setProviders] = useState([]);
   const navigate = useNavigate();
   
-  // Fetch providers on mount
   useEffect(() => {
     console.log("WorkloadForm mounted");
     const fetchProviderData = async () => {
       try {
-        // Reset workload to ensure we start fresh
         resetWorkload();
-        
-        // Set user type to developer
         updateWorkload({ userType: 'developer' });
         
-        // Fetch providers
         try {
           console.log("Fetching providers...");
           const providersResponse = await apiService.getProviders();
@@ -59,7 +54,6 @@ const WorkloadForm = () => {
     fetchProviderData();
   }, [resetWorkload, updateWorkload]);
   
-  // Handle region change
   const handleRegionChange = (provider, region) => {
     updateWorkload({
       region: {
@@ -69,12 +63,10 @@ const WorkloadForm = () => {
     });
   };
   
-  // Handle preferred provider change
   const handlePreferredProviderChange = (provider) => {
     updateWorkload({ preferred_provider: provider });
   };
   
-  // Handle technical requirements change
   const handleTechnicalRequirementChange = (requirement, value) => {
     updateWorkload({
       technicalRequirements: {
@@ -84,17 +76,14 @@ const WorkloadForm = () => {
     });
   };
   
-  // Handle next step
   const handleNextStep = () => {
     setStep(step + 1);
   };
 
-  // Handle previous step
   const handlePrevStep = () => {
     setStep(step - 1);
   };
   
-  // Handle form submission
   const handleSubmit = async (e) => {
     console.log("Form submitted", { currentStep: step });
     e.preventDefault();
@@ -110,29 +99,24 @@ const WorkloadForm = () => {
     try {
       console.log("Calculating costs for workload:", workload);
       
-      // Validate workload
       if (!workload.compute || workload.compute.length === 0) {
         throw new Error('At least one compute resource is required');
       }
       
       try {
-        // Calculate pricing
         console.log("Requesting pricing calculation...");
         const pricingResponse = await apiService.calculatePricing(workload);
         console.log("Pricing response:", pricingResponse.data);
         setPricing(pricingResponse.data);
         
-        // Get recommendations
         console.log("Requesting recommendations...");
         const recommendationsResponse = await apiService.getRecommendations(workload);
         console.log("Recommendations response:", recommendationsResponse.data);
         setRecommendations(recommendationsResponse.data);
       } catch (apiError) {
         console.error('API Error:', apiError);
-        // Even on API error, we'll navigate to dashboard with the workload saved
       }
       
-      // Navigate to dashboard
       console.log("Navigating to dashboard");
       navigate('/');
     } catch (err) {
@@ -142,7 +126,6 @@ const WorkloadForm = () => {
     }
   };
   
-  // Resource update handlers
   const handleUpdateCompute = (index, field, value) => {
     const updatedCompute = [...(workload.compute || [])];
     if (!updatedCompute[index].provider) {
@@ -254,7 +237,6 @@ const WorkloadForm = () => {
     });
   };
   
-  // Helper function to explain resource types
   const getResourceDescription = (resourceType) => {
     switch(resourceType) {
       case 'compute':
@@ -321,14 +303,12 @@ const WorkloadForm = () => {
         )}
         
         <form onSubmit={handleSubmit}>
-          {/* Step 1: Cloud Provider Selection */}
           {step === 1 && (
             <div>
               <h2 className="text-xl font-semibold text-gray-700 mb-6">Select Cloud Providers and Technical Requirements</h2>
               
               <CloudProviderSelector />
               
-              {/* Technical Requirements Section */}
               <div className="mt-8 mb-6">
                 <h3 className="text-lg font-semibold text-gray-700 mb-4">Technical Requirements</h3>
                 
@@ -467,7 +447,6 @@ const WorkloadForm = () => {
                   Select regions for each cloud provider to calculate pricing and performance metrics
                 </p>
                 
-                {/* Main cloud providers */}
                 <div className="space-y-4">
                   <div>
                     <label className="form-label text-sm">AWS Region</label>
@@ -496,7 +475,6 @@ const WorkloadForm = () => {
                     />
                   </div>
                   
-                  {/* Additional cloud providers */}
                   {['oracle', 'ibm', 'alibaba', 'digitalocean'].includes(workload.preferred_provider) && (
                     <div>
                       {workload.preferred_provider === 'oracle' && (
@@ -552,7 +530,6 @@ const WorkloadForm = () => {
                           </select>
                         </div>
                       )}
-{/* START MODIFICATION */}
                       {workload.preferred_provider === 'digitalocean' && (
                         <div>
                           <label className="form-label text-sm">DigitalOcean Region</label>
@@ -572,7 +549,6 @@ const WorkloadForm = () => {
                           </select>
                         </div>
                       )}
-{/* END MODIFICATION */}
                     </div>
                   )}
                 </div>
@@ -580,7 +556,6 @@ const WorkloadForm = () => {
             </div>
           )}
           
-          {/* Step 2: Compute Resources */}
           {step === 2 && (
             <div>
               <h2 className="text-xl font-semibold text-gray-700 mb-2">Define Compute Architecture</h2>
@@ -689,7 +664,6 @@ const WorkloadForm = () => {
                           </div>
                         </div>
                         
-                        {/* Developer-specific instance options */}
                         <div>
                           <label className="form-label">Instance Type</label>
                           <select 
@@ -732,7 +706,6 @@ const WorkloadForm = () => {
                 </div>
               )}
               
-              {/* Serverless Resources */}
               <div className="mt-8 mb-8">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold text-gray-700">Serverless Resources</h3>
@@ -825,7 +798,6 @@ const WorkloadForm = () => {
                 )}
               </div>
               
-              {/* Managed Services */}
               <div className="mt-8 mb-8">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold text-gray-700">Managed Services</h3>
@@ -908,7 +880,6 @@ const WorkloadForm = () => {
             </div>
           )}
           
-          {/* Step 3: Storage, Database and Networking */}
           {step === 3 && (
             <div>
               <h2 className="text-xl font-semibold text-gray-700 mb-6">Define Data and Networking Architecture</h2>
@@ -1138,7 +1109,6 @@ const WorkloadForm = () => {
                 )}
               </div>
               
-              {/* Networking Resources */}
               <div className="mt-8">
                 <div className="flex justify-between items-center mb-2">
                   <h3 className="text-lg font-semibold text-gray-700">Networking Resources</h3>
@@ -1239,7 +1209,6 @@ const WorkloadForm = () => {
             </div>
           )}
           
-          {/* Step 4: Review and Calculate */}
           {step === 4 && (
             <div>
               <h2 className="text-xl font-semibold text-gray-700 mb-6">Review Architecture and Calculate Costs</h2>

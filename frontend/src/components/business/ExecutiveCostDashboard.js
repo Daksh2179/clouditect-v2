@@ -1,3 +1,4 @@
+// frontend/src/components/business/ExecutiveCostDashboard.js
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 
@@ -71,7 +72,6 @@ const ExecutiveCostDashboard = ({ pricing, workload }) => {
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Executive Cost Summary</h2>
       
-      {/* Provider Ranking */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div className="bg-blue-50 p-4 rounded-lg border border-blue-100">
           <div className="text-sm text-blue-600">Recommended Provider</div>
@@ -116,7 +116,6 @@ const ExecutiveCostDashboard = ({ pricing, workload }) => {
         </div>
       </div>
       
-      {/* Cost Visualization */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h3 className="text-sm font-medium text-gray-700 mb-3">Monthly Cost by Provider</h3>
@@ -149,18 +148,18 @@ const ExecutiveCostDashboard = ({ pricing, workload }) => {
               <Pie
                 data={[
                   { name: 'Compute', value: pricing[cheapestProvider].compute, color: '#4361ee' },
-                  { name: 'Storage', value: pricing[cheapestProvider].storage, color: '#3f37c9' },
-                  { name: 'Database', value: pricing[cheapestProvider].database, color: '#4895ef' },
+                  { name: 'Storage', value: pricing[cheapestProvider].storage, color: '#acc937ff' },
+                  { name: 'Database', value: pricing[cheapestProvider].database, color: '#2cc25eff' },
                   { name: 'Networking', value: pricing[cheapestProvider].networking || 0, color: '#4cc9f0' },
-                  { name: 'Serverless', value: pricing[cheapestProvider].serverless || 0, color: '#560bad' },
-                  { name: 'Managed Services', value: pricing[cheapestProvider].managedServices || 0, color: '#7209b7' },
+                  { name: 'Serverless', value: pricing[cheapestProvider].serverless || 0, color: '#915ccfff' },
+                  { name: 'Managed Services', value: pricing[cheapestProvider].managedServices || 0, color: '#d71c12ff' },
                 ].filter(item => item.value > 0)}
                 cx="50%"
                 cy="50%"
                 labelLine={false}
                 label={renderCustomizedLabel}
                 outerRadius={100}
-                fill="#8884d8"
+                fill="#141318ff"
                 dataKey="value"
               >
                 {costData.map((entry, index) => (

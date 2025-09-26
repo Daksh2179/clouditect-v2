@@ -1,3 +1,4 @@
+// frontend/src/components/developer/AdvancedPerformanceAnalysis.js
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, LineChart, Line } from 'recharts';
 
@@ -6,27 +7,26 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
   
   if (!pricing) return null;
   
-  // Provider color map
   const providerColors = {
     aws: '#FF9900',
     azure: '#0089D6',
     gcp: '#4285F4',
     oracle: '#F80000',
     ibm: '#0F62FE',
-    alibaba: '#FF6A00'
+    alibaba: '#FF6A00',
+    digitalocean: '#0080FF'
   };
   
-  // Provider display names
   const providerNames = {
     aws: 'AWS',
     azure: 'Azure',
     gcp: 'GCP',
     oracle: 'Oracle',
     ibm: 'IBM',
-    alibaba: 'Alibaba'
+    alibaba: 'Alibaba',
+    digitalocean: 'DigitalOcean'
   };
   
-  // Performance benchmarks (simulated data)
   const performanceBenchmarks = {
     compute: {
       'CPU Performance (higher is better)': {
@@ -35,7 +35,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 100,
         oracle: 90,
         ibm: 88,
-        alibaba: 85
+        alibaba: 85,
+        digitalocean: 90
       },
       'Memory Bandwidth (higher is better)': {
         aws: 90,
@@ -43,7 +44,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 92,
         oracle: 95,
         ibm: 88,
-        alibaba: 85
+        alibaba: 85,
+        digitalocean: 88
       },
       'Network Performance (higher is better)': {
         aws: 92,
@@ -51,7 +53,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 100,
         oracle: 88,
         ibm: 85,
-        alibaba: 82
+        alibaba: 82,
+        digitalocean: 85
       }
     },
     storage: {
@@ -61,7 +64,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 95,
         oracle: 97,
         ibm: 88,
-        alibaba: 85
+        alibaba: 85,
+        digitalocean: 90
       },
       'Write IOPS (higher is better)': {
         aws: 94,
@@ -69,7 +73,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 93,
         oracle: 96,
         ibm: 90,
-        alibaba: 87
+        alibaba: 87,
+        digitalocean: 88
       },
       'Read Latency (lower is better)': {
         aws: 12,
@@ -77,7 +82,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 11,
         oracle: 10,
         ibm: 15,
-        alibaba: 16
+        alibaba: 16,
+        digitalocean: 13
       },
       'Write Latency (lower is better)': {
         aws: 15,
@@ -85,7 +91,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 14,
         oracle: 13,
         ibm: 17,
-        alibaba: 18
+        alibaba: 18,
+        digitalocean: 15
       }
     },
     database: {
@@ -95,7 +102,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 90,
         oracle: 100,
         ibm: 88,
-        alibaba: 85
+        alibaba: 85,
+        digitalocean: 85
       },
       'Write Throughput (higher is better)': {
         aws: 92,
@@ -103,7 +111,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 88,
         oracle: 100,
         ibm: 85,
-        alibaba: 83
+        alibaba: 83,
+        digitalocean: 82
       },
       'Query Performance (higher is better)': {
         aws: 90,
@@ -111,7 +120,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 94,
         oracle: 100,
         ibm: 88,
-        alibaba: 85
+        alibaba: 85,
+        digitalocean: 88
       }
     },
     network: {
@@ -121,7 +131,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 12,
         oracle: 20,
         ibm: 22,
-        alibaba: 25
+        alibaba: 25,
+        digitalocean: 18
       },
       'Global Network Performance (higher is better)': {
         aws: 95,
@@ -129,7 +140,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 100,
         oracle: 85,
         ibm: 88,
-        alibaba: 80
+        alibaba: 80,
+        digitalocean: 85
       },
       'CDN Performance (higher is better)': {
         aws: 97,
@@ -137,12 +149,12 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         gcp: 96,
         oracle: 85,
         ibm: 88,
-        alibaba: 90
+        alibaba: 90,
+        digitalocean: 92
       }
     }
   };
   
-  // Latency data (simulated)
   const latencyData = {
     'US East to US West': {
       aws: 60,
@@ -150,7 +162,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
       gcp: 55,
       oracle: 65,
       ibm: 68,
-      alibaba: 72
+      alibaba: 72,
+      digitalocean: 60
     },
     'US to Europe': {
       aws: 85,
@@ -158,7 +171,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
       gcp: 78,
       oracle: 90,
       ibm: 92,
-      alibaba: 95
+      alibaba: 95,
+      digitalocean: 82
     },
     'US to Asia': {
       aws: 170,
@@ -166,7 +180,8 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
       gcp: 160,
       oracle: 180,
       ibm: 185,
-      alibaba: 155
+      alibaba: 155,
+      digitalocean: 170
     },
     'Europe to Asia': {
       aws: 145,
@@ -174,24 +189,23 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
       gcp: 138,
       oracle: 150,
       ibm: 155,
-      alibaba: 135
+      alibaba: 135,
+      digitalocean: 145
     }
   };
   
-  // Cost-to-performance ratio
   const calculateCostPerformanceRatio = () => {
     const result = {};
     
     Object.keys(pricing).forEach(provider => {
       if (!pricing[provider]) return;
       
-      // Get average performance across key metrics
       let performanceSum = 0;
       let metricCount = 0;
       
       Object.values(performanceBenchmarks).forEach(category => {
         Object.entries(category).forEach(([metric, values]) => {
-          if (!metric.includes('Latency')) { // For metrics where higher is better
+          if (!metric.includes('Latency')) {
             performanceSum += values[provider];
             metricCount++;
           }
@@ -211,7 +225,6 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
   
   const costPerformanceRatio = calculateCostPerformanceRatio();
   
-  // Prepare data for charts
   const prepareBarData = (metricType) => {
     return Object.entries(performanceBenchmarks[metricType]).map(([metric, values]) => {
       const data = { name: metric };
@@ -228,7 +241,6 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
   
   const barData = prepareBarData(metricType);
   
-  // Prepare latency data for chart
   const prepareLatencyData = () => {
     return Object.entries(latencyData).map(([route, values]) => {
       const data = { name: route };
@@ -245,7 +257,6 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
   
   const latencyChartData = prepareLatencyData();
   
-  // Prepare cost-to-performance data
   const prepareCostPerformanceData = () => {
     return Object.keys(pricing).map(provider => {
       if (!costPerformanceRatio[provider]) return null;
@@ -254,7 +265,7 @@ const AdvancedPerformanceAnalysis = ({ pricing, workload }) => {
         name: providerNames[provider],
         performance: costPerformanceRatio[provider].performance,
         cost: costPerformanceRatio[provider].cost,
-        ratio: costPerformanceRatio[provider].ratio * 100 // Scale for visibility
+        ratio: costPerformanceRatio[provider].ratio * 100
       };
     }).filter(Boolean);
   };

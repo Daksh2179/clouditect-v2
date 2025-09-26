@@ -1,3 +1,4 @@
+/* frontend/src/index.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -94,6 +95,12 @@ code {
   color: #FF6A00;
 }
 
+/* START MODIFICATION */
+.text-digitalocean {
+  color: #0080FF;
+}
+/* END MODIFICATION */
+
 .bg-oracle {
   background-color: #F80000;
 }
@@ -105,6 +112,12 @@ code {
 .bg-alibaba {
   background-color: #FF6A00;
 }
+
+/* START MODIFICATION */
+.bg-digitalocean {
+  background-color: #0080FF;
+}
+/* END MODIFICATION */
 
 /* Button Styles */
 .btn-primary {

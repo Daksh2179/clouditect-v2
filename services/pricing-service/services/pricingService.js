@@ -1,3 +1,4 @@
+// services/pricing-service/services/pricingService.js
 const winston = require('winston');
 const cloudPricingClient = require('../clients/cloudPricingClient');
 
@@ -28,9 +29,8 @@ class PricingService {
       
       const instancePricing = computePricing[instanceType];
       
-      // Calculate cost based on hourly rate and usage
       const hourlyCost = instancePricing.hourly * quantity;
-      const monthlyCost = hourlyCost * (hoursPerMonth || 730); // Default to 730 hours per month (24/7)
+      const monthlyCost = hourlyCost * (hoursPerMonth || 730);
       
       return {
         provider,
@@ -96,7 +96,7 @@ class PricingService {
       if (dbPricing.monthly) {
         monthlyCost = dbPricing.monthly * quantity;
       } else if (dbPricing.hourly) {
-        monthlyCost = dbPricing.hourly * 730 * quantity; // 730 hours in a month
+        monthlyCost = dbPricing.hourly * 730 * quantity;
       }
       
       return {
@@ -117,7 +117,6 @@ class PricingService {
    */
   async calculateWorkloadCost(workload) {
     try {
-      // Initialize cost objects for each provider
       const costs = {
         aws: { compute: 0, storage: 0, database: 0, total: 0, details: {} },
         azure: { compute: 0, storage: 0, database: 0, total: 0, details: {} },
@@ -128,7 +127,6 @@ class PricingService {
         digitalocean: { compute: 0, storage: 0, database: 0, total: 0, details: {} }
       };
       
-      // Default regions if not specified
       const regions = {
         aws: workload.region?.aws || 'us-east-1',
         azure: workload.region?.azure || 'eastus',
@@ -139,14 +137,13 @@ class PricingService {
         digitalocean: workload.region?.digitalocean || 'nyc1'
       };
       
-      // Initialize details arrays for all providers
       Object.keys(costs).forEach(provider => {
         costs[provider].details.compute = [];
         costs[provider].details.storage = [];
         costs[provider].details.database = [];
       });
       
-      // Calculate compute costs
+// START MODIFICATION
       if (workload.compute && workload.compute.length > 0) {
         const instanceMap = {
           small: { 
@@ -190,43 +187,18 @@ class PricingService {
             const hoursPerMonth = vm.hoursPerMonth || 730;
             const vmSize = vm.size || 'medium';
             
-            const awsInstance = vm.aws_instance || instanceMap[vmSize]?.aws || 't2.medium';
-            const awsCompute = await this.calculateComputeCost('aws', regions.aws, awsInstance, quantity, hoursPerMonth);
-            costs.aws.compute += awsCompute.monthlyCost;
-            costs.aws.details.compute.push(awsCompute);
-            
-            const azureInstance = vm.azure_instance || instanceMap[vmSize]?.azure || 'B2S';
-            const azureCompute = await this.calculateComputeCost('azure', regions.azure, azureInstance, quantity, hoursPerMonth);
-            costs.azure.compute += azureCompute.monthlyCost;
-            costs.azure.details.compute.push(azureCompute);
-            
-            const gcpInstance = vm.gcp_instance || instanceMap[vmSize]?.gcp || 'e2-medium';
-            const gcpCompute = await this.calculateComputeCost('gcp', regions.gcp, gcpInstance, quantity, hoursPerMonth);
-            costs.gcp.compute += gcpCompute.monthlyCost;
-            costs.gcp.details.compute.push(gcpCompute);
-            
-            const ibmInstance = vm.ibm_instance || instanceMap[vmSize]?.ibm || 'bx2-2x8';
-            const ibmCompute = await this.calculateComputeCost('ibm', regions.ibm, ibmInstance, quantity, hoursPerMonth);
-            costs.ibm.compute += ibmCompute.monthlyCost;
-            costs.ibm.details.compute.push(ibmCompute);
-            
-            const oracleInstance = vm.oracle_instance || instanceMap[vmSize]?.oracle || 'VM.Standard.E3.Flex.2.8';
-            const oracleCompute = await this.calculateComputeCost('oracle', regions.oracle, oracleInstance, quantity, hoursPerMonth);
-            costs.oracle.compute += oracleCompute.monthlyCost;
-            costs.oracle.details.compute.push(oracleCompute);
-            
-            const alibabaInstance = vm.alibaba_instance || instanceMap[vmSize]?.alibaba || 'ecs.g6.large';
-            const alibabaCompute = await this.calculateComputeCost('alibaba', regions.alibaba, alibabaInstance, quantity, hoursPerMonth);
-            costs.alibaba.compute += alibabaCompute.monthlyCost;
-            costs.alibaba.details.compute.push(alibabaCompute);
-
-            const doInstance = vm.digitalocean_instance || instanceMap[vmSize]?.digitalocean || 's-2vcpu-4gb';
-            const doCompute = await this.calculateComputeCost('digitalocean', regions.digitalocean, doInstance, quantity, hoursPerMonth);
-            costs.digitalocean.compute += doCompute.monthlyCost;
-            costs.digitalocean.details.compute.push(doCompute);
+            for (const provider of Object.keys(costs)) {
+              const instance = instanceMap[vmSize]?.[provider];
+              if (instance) {
+                const compute = await this.calculateComputeCost(provider, regions[provider], instance, quantity, hoursPerMonth);
+                costs[provider].compute += compute.monthlyCost;
+                costs[provider].details.compute.push(compute);
+              }
+            }
           }
         }
       }
+// END MODIFICATION
       
       if (workload.storage && workload.storage.length > 0) {
         for (const storage of workload.storage) {
@@ -255,33 +227,23 @@ class PricingService {
           }
           
           try {
-            const awsStorage = await this.calculateStorageCost('aws', awsStorageType, sizeGB);
-            costs.aws.storage += awsStorage.monthlyCost;
-            costs.aws.details.storage.push(awsStorage);
-            
-            const azureStorage = await this.calculateStorageCost('azure', azureStorageType, sizeGB);
-            costs.azure.storage += azureStorage.monthlyCost;
-            costs.azure.details.storage.push(azureStorage);
-            
-            const gcpStorage = await this.calculateStorageCost('gcp', gcpStorageType, sizeGB);
-            costs.gcp.storage += gcpStorage.monthlyCost;
-            costs.gcp.details.storage.push(gcpStorage);
-            
-            const ibmStorage = await this.calculateStorageCost('ibm', ibmStorageType, sizeGB);
-            costs.ibm.storage += ibmStorage.monthlyCost;
-            costs.ibm.details.storage.push(ibmStorage);
-            
-            const oracleStorage = await this.calculateStorageCost('oracle', oracleStorageType, sizeGB);
-            costs.oracle.storage += oracleStorage.monthlyCost;
-            costs.oracle.details.storage.push(oracleStorage);
-            
-            const alibabaStorage = await this.calculateStorageCost('alibaba', alibabaStorageType, sizeGB);
-            costs.alibaba.storage += alibabaStorage.monthlyCost;
-            costs.alibaba.details.storage.push(alibabaStorage);
-
-            const doStorage = await this.calculateStorageCost('digitalocean', doStorageType, sizeGB);
-            costs.digitalocean.storage += doStorage.monthlyCost;
-            costs.digitalocean.details.storage.push(doStorage);
+            for (const provider of Object.keys(costs)) {
+              let type;
+              switch (provider) {
+                case 'aws': type = awsStorageType; break;
+                case 'azure': type = azureStorageType; break;
+                case 'gcp': type = gcpStorageType; break;
+                case 'ibm': type = ibmStorageType; break;
+                case 'oracle': type = oracleStorageType; break;
+                case 'alibaba': type = alibabaStorageType; break;
+                case 'digitalocean': type = doStorageType; break;
+              }
+              if (type) {
+                const storageCost = await this.calculateStorageCost(provider, type, sizeGB);
+                costs[provider].storage += storageCost.monthlyCost;
+                costs[provider].details.storage.push(storageCost);
+              }
+            }
           } catch (error) {
             logger.error(`Error calculating storage costs: ${error.message}`);
           }
@@ -315,33 +277,23 @@ class PricingService {
           }
           
           try {
-            const awsDB = await this.calculateDatabaseCost('aws', awsDBType, quantity);
-            costs.aws.database += awsDB.monthlyCost;
-            costs.aws.details.database.push(awsDB);
-            
-            const azureDB = await this.calculateDatabaseCost('azure', azureDBType, quantity);
-            costs.azure.database += azureDB.monthlyCost;
-            costs.azure.details.database.push(azureDB);
-            
-            const gcpDB = await this.calculateDatabaseCost('gcp', gcpDBType, quantity);
-            costs.gcp.database += gcpDB.monthlyCost;
-            costs.gcp.details.database.push(gcpDB);
-            
-            const ibmDB = await this.calculateDatabaseCost('ibm', ibmDBType, quantity);
-            costs.ibm.database += ibmDB.monthlyCost;
-            costs.ibm.details.database.push(ibmDB);
-            
-            const oracleDB = await this.calculateDatabaseCost('oracle', oracleDBType, quantity);
-            costs.oracle.database += oracleDB.monthlyCost;
-            costs.oracle.details.database.push(oracleDB);
-            
-            const alibabaDB = await this.calculateDatabaseCost('alibaba', alibabaDBType, quantity);
-            costs.alibaba.database += alibabaDB.monthlyCost;
-            costs.alibaba.details.database.push(alibabaDB);
-
-            const doDB = await this.calculateDatabaseCost('digitalocean', doDBType, quantity);
-            costs.digitalocean.database += doDB.monthlyCost;
-            costs.digitalocean.details.database.push(doDB);
+            for (const provider of Object.keys(costs)) {
+              let type;
+              switch (provider) {
+                case 'aws': type = awsDBType; break;
+                case 'azure': type = azureDBType; break;
+                case 'gcp': type = gcpDBType; break;
+                case 'ibm': type = ibmDBType; break;
+                case 'oracle': type = oracleDBType; break;
+                case 'alibaba': type = alibabaDBType; break;
+                case 'digitalocean': type = doDBType; break;
+              }
+              if (type) {
+                const dbCost = await this.calculateDatabaseCost(provider, type, quantity);
+                costs[provider].database += dbCost.monthlyCost;
+                costs[provider].details.database.push(dbCost);
+              }
+            }
           } catch (error) {
             logger.error(`Error calculating database costs: ${error.message}`);
           }

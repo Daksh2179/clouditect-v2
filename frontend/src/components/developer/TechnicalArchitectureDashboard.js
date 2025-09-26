@@ -1,3 +1,4 @@
+// frontend/src/components/developer/TechnicalArchitectureDashboard.js
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis } from 'recharts';
 
@@ -6,7 +7,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
   
   if (!pricing) return null;
   
-  // Provider color map
   const providerColors = {
     aws: '#FF9900',
     azure: '#0089D6',
@@ -16,7 +16,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     alibaba: '#FF6A00'
   };
   
-  // Provider display names
   const providerNames = {
     aws: 'AWS',
     azure: 'Azure',
@@ -26,7 +25,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     alibaba: 'Alibaba'
   };
   
-  // Service mapping between providers
   const serviceMapping = {
     compute: {
       aws: 'EC2',
@@ -78,7 +76,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     }
   };
   
-  // Feature comparison data
   const featureComparison = {
     containerOrchestration: {
       aws: {
@@ -230,7 +227,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     }
   };
   
-  // Service implementation details
   const serviceImplementation = {
     aws: {
       compute: 'Amazon EC2 offers a wide range of instance types optimized for different use cases.',
@@ -270,7 +266,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     }
   };
   
-  // Architecture patterns and compatibility
   const architecturePatterns = {
     microservices: {
       aws: 5,
@@ -314,7 +309,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     }
   };
   
-  // Prepare radar chart data
   const prepareRadarData = (category) => {
     return Object.keys(featureComparison[category][Object.keys(featureComparison[category])[0]].features).map(feature => {
       const data = { feature };
@@ -327,7 +321,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     });
   };
   
-  // Only show available categories based on workload
   const availableCategories = [];
   if ((workload.compute || []).length > 0) availableCategories.push('compute');
   if ((workload.managedServices || []).some(s => s.type === 'kubernetes')) availableCategories.push('containerOrchestration');
@@ -335,7 +328,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
   if ((workload.storage || []).length > 0) availableCategories.push('storage');
   if ((workload.database || []).length > 0) availableCategories.push('database');
   
-  // Determine which feature comparison to show
   const selectedCategory = availableCategories.includes('containerOrchestration') 
     ? 'containerOrchestration' 
     : availableCategories.includes('serverless')
@@ -348,7 +340,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
     <div className="bg-white rounded-lg shadow-sm p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-4">Technical Architecture Analysis</h2>
       
-      {/* Tabs */}
       <div className="mb-6">
         <div className="sm:hidden">
           <label htmlFor="tabs" className="sr-only">Select a tab</label>
@@ -402,7 +393,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
         </div>
       </div>
       
-      {/* Services Comparison Tab */}
       {activeTab === 'services' && (
         <div>
           <h3 className="font-medium text-gray-900 mb-4">Equivalent Services Across Providers</h3>
@@ -464,7 +454,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
         </div>
       )}
       
-      {/* Feature Comparison Tab */}
       {activeTab === 'features' && (
         <div>
           {selectedCategory ? (
@@ -564,7 +553,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
         </div>
       )}
       
-      {/* Architecture Patterns Tab */}
       {activeTab === 'architectures' && (
         <div>
           <h3 className="font-medium text-gray-900 mb-4">Architecture Pattern Compatibility</h3>
@@ -617,7 +605,6 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
             </table>
           </div>
           
-          {/* Architecture Diagrams */}
           <div className="mt-8">
             <h3 className="font-medium text-gray-900 mb-4">Sample Architecture Patterns</h3>
             
@@ -625,53 +612,53 @@ const TechnicalArchitectureDashboard = ({ pricing, workload }) => {
               <div className="border border-gray-200 rounded-lg p-4">
                 <h4 className="font-medium text-gray-800 mb-2">Microservices Architecture</h4>
                 <div className="bg-gray-100 p-4 rounded-lg text-sm font-mono overflow-auto h-48">
-                  # Microservices Architecture Example
-                  
-                  ApiGateway:
-                    Expose REST APIs for clients
-                    Route to appropriate microservices
-                  
-                  Services:
-                    UserService:
-                      Container: Node.js
-                      Database: MongoDB
-                    
-                    OrderService:
-                      Container: Java Spring Boot
-                      Database: PostgreSQL
-                    
-                    PaymentService:
-                      Container: .NET Core
-                      Database: SQL Server
-                  
-                  Communication:
-                    Event Bus for async messaging
-                    Service-to-service REST for sync
+                  {`# Microservices Architecture Example
+
+ApiGateway:
+  Expose REST APIs for clients
+  Route to appropriate microservices
+
+Services:
+  UserService:
+    Container: Node.js
+    Database: MongoDB
+  
+  OrderService:
+    Container: Java Spring Boot
+    Database: PostgreSQL
+  
+  PaymentService:
+    Container: .NET Core
+    Database: SQL Server
+
+Communication:
+  Event Bus for async messaging
+  Service-to-service REST for sync`}
                 </div>
               </div>
               
               <div className="border border-gray-200 rounded-lg p-4">
                 <h4 className="font-medium text-gray-800 mb-2">Serverless Architecture</h4>
                 <div className="bg-gray-100 p-4 rounded-lg text-sm font-mono overflow-auto h-48">
-                  # Serverless Architecture Example
-                  
-                  Frontend:
-                    Static assets in blob storage
-                    CDN for delivery
-                  
-                  API Layer:
-                    Functions exposed via API Gateway
-                    JWT authentication
-                  
-                  Backend:
-                    Functions for business logic:
-                      - CreateOrder (Node.js)
-                      - ProcessPayment (Python)
-                      - NotifyUser (Node.js)
-                  
-                  Data:
-                    NoSQL Database for persistence
-                    Event streams for workflow processing
+                  {`# Serverless Architecture Example
+
+Frontend:
+  Static assets in blob storage
+  CDN for delivery
+
+API Layer:
+  Functions exposed via API Gateway
+  JWT authentication
+
+Backend:
+  Functions for business logic:
+    - CreateOrder (Node.js)
+    - ProcessPayment (Python)
+    - NotifyUser (Node.js)
+
+Data:
+  NoSQL Database for persistence
+  Event streams for workflow processing`}
                 </div>
               </div>
             </div>

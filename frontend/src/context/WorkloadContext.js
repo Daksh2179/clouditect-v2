@@ -1,3 +1,4 @@
+// frontend/src/context/WorkloadContext.js
 // Enhanced WorkloadContext.js
 import React, { createContext, useState, useContext, useCallback } from 'react';
 
@@ -23,7 +24,9 @@ const initialWorkload = {
   },
   preferred_provider: 'aws',
   userType: 'business', // New field for user type (business or developer)
-  deploymentStrategy: 'single-cloud',
+// START MODIFICATION
+  deploymentStrategy: 'single-cloud', // Add deploymentStrategy
+// END MODIFICATION
   existingProvider: null, // New field to track if user already has cloud services
   complianceRequirements: [], // New field for compliance requirements
   businessMetrics: {

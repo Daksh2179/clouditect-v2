@@ -1,5 +1,4 @@
 // frontend/src/pages/Dashboard.js
-// Enhanced Dashboard.js for Business View
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWorkload } from '../context/WorkloadContext';
@@ -8,7 +7,6 @@ import RecommendationsList from '../components/RecommendationsList';
 import ProviderCostCard from '../components/ProviderCostCard';
 import RegionComparisonChart from '../components/RegionComparisonChart';
 
-// Import new business components
 import ExecutiveCostDashboard from '../components/business/ExecutiveCostDashboard';
 import BusinessFitAnalysis from '../components/business/BusinessFitAnalysis';
 import FinancialAnalysis from '../components/business/FinancialAnalysis';
@@ -19,16 +17,13 @@ import TechnicalArchitectureDashboard from '../components/developer/TechnicalArc
 import DeveloperExperienceAssessment from '../components/developer/DeveloperExperienceAssessment';
 import SecurityComplianceImplementation from '../components/developer/SecurityComplianceImplementation';
 import AdvancedPerformanceAnalysis from '../components/developer/AdvancedPerformanceAnalysis';
-// START MODIFICATION
 import MultiCloudCompatibility from '../components/developer/MultiCloudCompatibility';
-// END MODIFICATION
 
 const Dashboard = () => {
   const { pricing, recommendations, workload } = useWorkload();
   const [preferredProvider, setPreferredProvider] = useState('aws');
   const userType = workload?.userType || 'business';
   
-  // Set preferred provider from workload when pricing is available
   useEffect(() => {
     if (pricing && workload?.preferred_provider) {
       setPreferredProvider(workload.preferred_provider);
@@ -105,7 +100,6 @@ const Dashboard = () => {
         </div>
       ) : (
         <div className="space-y-6">
-          {/* User Type Indicator */}
           <div className="bg-white border-l-4 px-4 py-3 shadow-sm rounded-lg flex justify-between items-center">
             <div>
               <div className={`border-l-4 ${userType === 'business' ? 'border-blue-500' : 'border-purple-500'} pl-3`}>
@@ -142,7 +136,6 @@ const Dashboard = () => {
             </div>
           </div>
           
-          {/* Business View */}
           {userType === 'business' && (
             <>
               <ExecutiveCostDashboard pricing={pricing} workload={workload} />
@@ -153,7 +146,6 @@ const Dashboard = () => {
             </>
           )}
           
-          {/* Developer View */}
 {userType === 'developer' && (
   <>
     <TechnicalArchitectureDashboard pricing={pricing} workload={workload} />
@@ -162,7 +154,6 @@ const Dashboard = () => {
     <SecurityComplianceImplementation pricing={pricing} workload={workload} />
     <AdvancedPerformanceAnalysis pricing={pricing} workload={workload} />
     
-    {/* Standard Cost Comparison */}
     <div className="card mt-6">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Cost Breakdown</h2>
       <CostComparisonChart pricing={pricing} />
@@ -186,7 +177,6 @@ const Dashboard = () => {
       </div>
     </div>
     
-    {/* Region Comparison - Keep if useful for developers */}
     <div className="card mt-6">
       <h2 className="text-xl font-semibold text-gray-700 mb-4">Regional Performance Analysis</h2>
       <div className="mb-4">

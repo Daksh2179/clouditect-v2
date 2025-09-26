@@ -35,14 +35,13 @@ const redis = {
     return item.value;
   },
   set: async (key, value, mode, duration, ttl) => {
-    // Handle different forms of the set command
     let expiryTime = 0;
     if (mode === 'EX' && duration) {
       expiryTime = Date.now() + (duration * 1000);
     } else if (ttl) {
       expiryTime = Date.now() + ttl;
     } else {
-      expiryTime = Date.now() + (3600 * 1000); // Default 1 hour
+      expiryTime = Date.now() + (3600 * 1000);
     }
     
     memoryCache[key] = {
@@ -57,16 +56,12 @@ const redis = {
   }
 };
 
-
-// Pricing service URL
 const PRICING_SERVICE_URL = process.env.PRICING_SERVICE_URL || 'http://localhost:4001';
 
-// Middleware
-app.use(helmet()); // Security headers
-app.use(cors()); // Enable CORS for all routes
-app.use(express.json()); // Parse JSON request bodies
+app.use(helmet());
+app.use(cors());
+app.use(express.json());
 
-// Request logging middleware
 app.use((req, res, next) => {
   const requestId = req.headers['x-request-id'] || Date.now().toString(36) + Math.random().toString(36).substring(2);
   
@@ -82,14 +77,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// Function to check if workload is over-provisioned
 const checkOverProvisioning = (workload) => {
   const recommendations = [];
   
-  // Check compute resources
   if (workload.compute) {
     for (const vm of workload.compute) {
-      // Check if large instances are underutilized
       if (vm.size === 'large' && (vm.utilization || 0) < 50) {
         recommendations.push({
           type: 'compute',
@@ -103,7 +95,6 @@ const checkOverProvisioning = (workload) => {
         });
       }
       
-      // Check if there are too many instances
       if ((vm.quantity || 1) > 3 && (vm.utilization || 0) < 30) {
         recommendations.push({
           type: 'compute',
@@ -119,10 +110,8 @@ const checkOverProvisioning = (workload) => {
     }
   }
   
-  // Check storage resources
   if (workload.storage) {
     for (const storage of workload.storage) {
-      // Check if high-performance storage is used for non-critical data
       if (storage.type === 'premium' && !storage.critical) {
         recommendations.push({
           type: 'storage',
@@ -136,7 +125,6 @@ const checkOverProvisioning = (workload) => {
         });
       }
       
-      // Check if storage is oversized
       if ((storage.sizeGB || 0) > 1000 && (storage.utilization || 0) < 40) {
         recommendations.push({
           type: 'storage',
@@ -152,10 +140,8 @@ const checkOverProvisioning = (workload) => {
     }
   }
   
-  // Check database resources
   if (workload.database) {
     for (const db of workload.database) {
-      // Check if high-tier database is used for low workloads
       if (db.tier === 'high' && (db.utilization || 0) < 40) {
         recommendations.push({
           type: 'database',
@@ -174,14 +160,11 @@ const checkOverProvisioning = (workload) => {
   return recommendations;
 };
 
-// Function to recommend reserved instances
 const recommendReservedInstances = (workload) => {
   const recommendations = [];
   
-  // Check compute resources for reserved instance opportunities
   if (workload.compute) {
     for (const vm of workload.compute) {
-      // Check if instances are running 24/7
       if ((vm.hoursPerMonth || 0) > 700) {
         recommendations.push({
           type: 'compute',
@@ -195,7 +178,6 @@ const recommendReservedInstances = (workload) => {
         });
       }
       
-      // Check if instances are consistent but not 24/7
       if ((vm.hoursPerMonth || 0) > 400 && (vm.hoursPerMonth || 0) <= 700) {
         recommendations.push({
           type: 'compute',
@@ -211,10 +193,8 @@ const recommendReservedInstances = (workload) => {
     }
   }
   
-  // Check database resources for reserved instance opportunities
   if (workload.database) {
     for (const db of workload.database) {
-      // Check if databases are running 24/7
       if ((db.hoursPerMonth || 0) > 700) {
         recommendations.push({
           type: 'database',
@@ -233,18 +213,14 @@ const recommendReservedInstances = (workload) => {
   return recommendations;
 };
 
-// Function to recommend region optimization
 const recommendRegionOptimization = (workload, pricingData) => {
   const recommendations = [];
   
-  // Check if a cheaper region could be used
   if (pricingData) {
-    // Find the cheapest provider and region
     const cheapestProvider = Object.keys(pricingData).reduce((a, b) => 
       pricingData[a].total < pricingData[b].total ? a : b
     );
     
-    // AWS region optimization
     if (workload.region?.aws && workload.region.aws !== 'us-east-1' && pricingData.aws && pricingData.aws.total > 500) {
       recommendations.push({
         type: 'region',
@@ -258,7 +234,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // Azure region optimization
     if (workload.region?.azure && workload.region.azure !== 'eastus' && pricingData.azure && pricingData.azure.total > 500) {
       recommendations.push({
         type: 'region',
@@ -272,7 +247,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // GCP region optimization
     if (workload.region?.gcp && workload.region.gcp !== 'us-central1' && pricingData.gcp && pricingData.gcp.total > 500) {
       recommendations.push({
         type: 'region',
@@ -286,7 +260,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // IBM region optimization
     if (workload.region?.ibm && workload.region.ibm !== 'us-south' && pricingData.ibm && pricingData.ibm.total > 500) {
       recommendations.push({
         type: 'region',
@@ -300,7 +273,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // Oracle region optimization
     if (workload.region?.oracle && workload.region.oracle !== 'us-ashburn-1' && pricingData.oracle && pricingData.oracle.total > 500) {
       recommendations.push({
         type: 'region',
@@ -314,7 +286,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // Alibaba region optimization
     if (workload.region?.alibaba && workload.region.alibaba !== 'us-west-1' && pricingData.alibaba && pricingData.alibaba.total > 500) {
       recommendations.push({
         type: 'region',
@@ -328,7 +299,6 @@ const recommendRegionOptimization = (workload, pricingData) => {
       });
     }
     
-    // Provider switch recommendation
     if (cheapestProvider && workload.preferred_provider && cheapestProvider !== workload.preferred_provider) {
       const savingPercentage = Math.round(
         (1 - pricingData[cheapestProvider].total / pricingData[workload.preferred_provider].total) * 100
@@ -352,14 +322,11 @@ const recommendRegionOptimization = (workload, pricingData) => {
   return recommendations;
 };
 
-// Function to recommend storage optimizations
 const recommendStorageOptimizations = (workload) => {
   const recommendations = [];
   
-  // Check storage resources
   if (workload.storage) {
     for (const storage of workload.storage) {
-      // Check if lifecycle policies could be beneficial
       if (storage.type === 'object' && (storage.sizeGB || 0) > 500) {
         recommendations.push({
           type: 'storage',
@@ -373,7 +340,6 @@ const recommendStorageOptimizations = (workload) => {
         });
       }
       
-      // Check if data tiering could be beneficial
       if (storage.type === 'block' && (storage.sizeGB || 0) > 1000) {
         recommendations.push({
           type: 'storage',
@@ -392,14 +358,11 @@ const recommendStorageOptimizations = (workload) => {
   return recommendations;
 };
 
-// Function to provide provider-specific recommendations
 const providerSpecificRecommendations = (workload, pricingData) => {
   const recommendations = [];
   const preferredProvider = workload.preferred_provider || 'aws';
   
-  // AWS-specific recommendations
   if (preferredProvider === 'aws' && pricingData?.aws) {
-    // Check if compute costs are significant and can benefit from Savings Plans
     if (pricingData.aws.compute > 200) {
       recommendations.push({
         type: 'aws_specific',
@@ -413,7 +376,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check if there are RDS instances that could use Reserved Instances
     if (pricingData.aws.database > 150) {
       recommendations.push({
         type: 'aws_specific',
@@ -428,9 +390,7 @@ const providerSpecificRecommendations = (workload, pricingData) => {
     }
   }
   
-  // Azure-specific recommendations
   if (preferredProvider === 'azure' && pricingData?.azure) {
-    // Check if compute costs are significant and can benefit from Reserved Instances
     if (pricingData.azure.compute > 200) {
       recommendations.push({
         type: 'azure_specific',
@@ -444,7 +404,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check if there's significant storage that could use Azure Storage Reserved Capacity
     if (pricingData.azure.storage > 100) {
       recommendations.push({
         type: 'azure_specific',
@@ -459,9 +418,7 @@ const providerSpecificRecommendations = (workload, pricingData) => {
     }
   }
   
-  // GCP-specific recommendations
   if (preferredProvider === 'gcp' && pricingData?.gcp) {
-    // Check if compute costs are significant and can benefit from Committed Use Discounts
     if (pricingData.gcp.compute > 200) {
       recommendations.push({
         type: 'gcp_specific',
@@ -475,7 +432,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check if BigQuery is being used and could benefit from capacity commitments
     if (workload.bigquery && workload.bigquery.length > 0) {
       recommendations.push({
         type: 'gcp_specific',
@@ -490,9 +446,7 @@ const providerSpecificRecommendations = (workload, pricingData) => {
     }
   }
   
-  // IBM-specific recommendations
   if (preferredProvider === 'ibm' && pricingData?.ibm) {
-    // Check if compute costs are significant and can benefit from Reserved Instances
     if (pricingData.ibm.compute > 200) {
       recommendations.push({
         type: 'ibm_specific',
@@ -506,7 +460,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check for Cloud Pak integration opportunities
     if (workload.database && workload.database.length > 0) {
       recommendations.push({
         type: 'ibm_specific',
@@ -521,9 +474,7 @@ const providerSpecificRecommendations = (workload, pricingData) => {
     }
   }
   
-  // Oracle-specific recommendations
   if (preferredProvider === 'oracle' && pricingData?.oracle) {
-    // Check if compute costs are significant and could benefit from Universal Credits
     if (pricingData.oracle.compute > 150) {
       recommendations.push({
         type: 'oracle_specific',
@@ -537,7 +488,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check for BYOL opportunities
     if (workload.database && workload.database.length > 0) {
       recommendations.push({
         type: 'oracle_specific',
@@ -552,9 +502,7 @@ const providerSpecificRecommendations = (workload, pricingData) => {
     }
   }
   
-  // Alibaba-specific recommendations
   if (preferredProvider === 'alibaba' && pricingData?.alibaba) {
-    // Check if compute costs are significant and could benefit from Reserved Instances
     if (pricingData.alibaba.compute > 150) {
       recommendations.push({
         type: 'alibaba_specific',
@@ -568,7 +516,6 @@ const providerSpecificRecommendations = (workload, pricingData) => {
       });
     }
     
-    // Check for CDN usage that could benefit from resource packages
     if (workload.networking && workload.networking.some(n => n.type === 'cdn')) {
       recommendations.push({
         type: 'alibaba_specific',
@@ -586,10 +533,8 @@ const providerSpecificRecommendations = (workload, pricingData) => {
   return recommendations;
 };
 
-// Generate comprehensive recommendations
 const generateRecommendations = async (workload) => {
   try {
-    // First, get pricing data for the workload
     let pricingData = null;
     try {
       const pricingResponse = await axios.post(`${PRICING_SERVICE_URL}/calculate`, workload, {
@@ -598,17 +543,14 @@ const generateRecommendations = async (workload) => {
       pricingData = pricingResponse.data;
     } catch (error) {
       logger.error(`Error fetching pricing data: ${error.message}`);
-      // Continue without pricing data
     }
     
-    // Generate different types of recommendations
     const overProvisioningRecs = checkOverProvisioning(workload);
     const reservedInstanceRecs = recommendReservedInstances(workload);
     const regionRecs = recommendRegionOptimization(workload, pricingData);
     const storageRecs = recommendStorageOptimizations(workload);
     const providerSpecificRecs = providerSpecificRecommendations(workload, pricingData);
     
-    // Combine all recommendations
     const allRecommendations = [
       ...overProvisioningRecs,
       ...reservedInstanceRecs,
@@ -618,7 +560,6 @@ const generateRecommendations = async (workload) => {
     ];
 
 // START MODIFICATION
-    // Add multi-cloud recommendations
     if (workload.deploymentStrategy === 'multi-cloud') {
       allRecommendations.push({
         type: 'multi-cloud',
@@ -632,13 +573,12 @@ const generateRecommendations = async (workload) => {
       });
     }
 
-    // Estimate migration complexity and developer hours
     if (workload.deploymentStrategy === 'multi-cloud') {
         let complexity = 0;
         let devHours = 0;
         workload.compute.forEach(vm => {
             complexity += (vm.quantity || 1);
-            devHours += (vm.quantity || 1) * 8; // 8 hours per VM for migration
+            devHours += (vm.quantity || 1) * 8;
         });
         allRecommendations.push({
             type: 'migration',
@@ -653,29 +593,23 @@ const generateRecommendations = async (workload) => {
     }
 // END MODIFICATION
     
-    // Sort by severity and potential savings
     allRecommendations.sort((a, b) => {
       const severityOrder = { high: 0, medium: 1, low: 2 };
       return severityOrder[a.severity] - severityOrder[b.severity];
     });
     
-    // Calculate potential savings
     let totalMonthlyCost = 0;
     let potentialSavings = 0;
     
     if (pricingData) {
-      // Determine which provider to use for calculations
       const preferredProvider = workload.preferred_provider || 'aws';
       totalMonthlyCost = pricingData[preferredProvider]?.total || 0;
       
-      // Estimate potential savings based on recommendations
       for (const rec of allRecommendations) {
         if (!rec.saving_potential || rec.saving_potential === 'N/A') continue;
-        // Extract saving percentage from the range (e.g., "20-30%" -> 0.25)
         const savingRange = rec.saving_potential.replace('%', '').split('-');
-        const avgSavingPercentage = (parseInt(savingRange[0]) + parseInt(savingRange[1])) / 200; // Average and convert to decimal
+        const avgSavingPercentage = (parseInt(savingRange[0]) + parseInt(savingRange[1])) / 200;
         
-        // Estimate the portion of the total cost this recommendation affects
         let affectedPortion = 0;
         
         switch (rec.type) {
@@ -690,7 +624,7 @@ const generateRecommendations = async (workload) => {
             break;
           case 'region':
           case 'provider':
-            affectedPortion = 1; // Affects the entire workload
+            affectedPortion = 1;
             break;
           case 'aws_specific':
           case 'azure_specific':
@@ -698,7 +632,6 @@ const generateRecommendations = async (workload) => {
           case 'ibm_specific':
           case 'oracle_specific':
           case 'alibaba_specific':
-            // For provider-specific recommendations, estimate based on action
             if (rec.action.includes('compute') || rec.action.includes('reserved')) {
               affectedPortion = pricingData[preferredProvider]?.compute / totalMonthlyCost || 0.4;
             } else if (rec.action.includes('storage')) {
@@ -706,21 +639,18 @@ const generateRecommendations = async (workload) => {
             } else if (rec.action.includes('database') || rec.action.includes('db')) {
               affectedPortion = pricingData[preferredProvider]?.database / totalMonthlyCost || 0.2;
             } else {
-              affectedPortion = 0.5; // Default for provider-specific if unknown
+              affectedPortion = 0.5;
             }
             break;
           default:
-            affectedPortion = 0.2; // Default to 20% if unknown
+            affectedPortion = 0.2;
         }
         
-        // For specific resources, adjust the affected portion
         if (rec.resource.includes('instance')) {
-          // If we know there are multiple instances, adjust accordingly
           const instanceCount = workload.compute ? workload.compute.reduce((sum, vm) => sum + (vm.quantity || 1), 0) : 1;
           affectedPortion = (pricingData[preferredProvider]?.compute / totalMonthlyCost || 0.4) / instanceCount;
         }
         
-        // Add the potential saving for this recommendation
         potentialSavings += totalMonthlyCost * affectedPortion * avgSavingPercentage;
       }
     }
@@ -743,23 +673,18 @@ const generateRecommendations = async (workload) => {
   }
 };
 
-// Define routes
-// Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
-// Generate recommendations endpoint
 app.post('/generate', async (req, res) => {
   try {
     const workload = req.body;
     
-    // Validate input
     if (!workload) {
       return res.status(400).json({ error: 'Workload configuration is required' });
     }
     
-    // Check cache first
     const cacheKey = `recommendations:${JSON.stringify(workload)}`;
     const cachedResult = await redis.get(cacheKey);
     
@@ -772,10 +697,8 @@ app.post('/generate', async (req, res) => {
       return res.json(JSON.parse(cachedResult));
     }
     
-    // Generate recommendations
     const recommendations = await generateRecommendations(workload);
     
-    // Cache result for 1 hour
     await redis.set(cacheKey, JSON.stringify(recommendations), 'EX', 3600);
     
     res.json(recommendations);
@@ -790,7 +713,6 @@ app.post('/generate', async (req, res) => {
   }
 });
 
-// Error handling middleware
 app.use((err, req, res, next) => {
   logger.error({
     requestId: req.requestId,
@@ -804,9 +726,8 @@ app.use((err, req, res, next) => {
   });
 });
 
-// Start the server
 app.listen(PORT, () => {
   logger.info(`Recommendation Service listening on port ${PORT}`);
 });
 
-module.exports = app; // For testing
+module.exports = app;
