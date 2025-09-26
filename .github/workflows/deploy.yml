@@ -40,7 +40,8 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-frontend:latest \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=8080
 
       # --- Build and Deploy API Gateway ---
       - name: Build and Push API Gateway
@@ -54,7 +55,8 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-api-gateway:latest \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=4000
 
       # --- Build and Deploy Pricing Service ---
       - name: Build and Push Pricing Service
@@ -68,7 +70,8 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=4001
 
       # --- Build and Deploy Recommendation Service ---
       - name: Build and Push Recommendation Service
@@ -82,7 +85,8 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-recommendation-service:latest \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=4002
 
       # --- Build and Deploy Provider Service ---
       - name: Build and Push Provider Service
@@ -96,4 +100,5 @@ jobs:
             --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-provider-service:latest \
             --region us-central1 \
             --platform managed \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --port=4003
