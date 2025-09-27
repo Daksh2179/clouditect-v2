@@ -1,15 +1,15 @@
-FROM node:16-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Copy and install dependencies
 COPY services/pricing-service/package*.json ./
-RUN npm install
+RUN npm ci --only=production
 
-COPY services/pricing-service/. .
-
-# Copy the shared pricing data from the project root into the container
-COPY data/pricing ./data/
+# Copy service code
+COPY services/pricing-service/ .
 
 EXPOSE 4001
 
+# Use the format that works for you (no square brackets)
 CMD node index.js

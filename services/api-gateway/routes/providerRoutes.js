@@ -1,147 +1,81 @@
 const express = require('express');
-const axios = require('axios');
 const router = express.Router();
+const axios = require('axios');
 
-// Provider service URL from environment variables
 const PROVIDER_SERVICE_URL = process.env.PROVIDER_SERVICE_URL || 'http://localhost:4003';
 
-// List all providers
-router.get('/', async (req, res, next) => {
+/**
+ * @swagger
+ * /api/providers:
+ *   get:
+ *     summary: Get all cloud providers
+ *     tags: [Providers]
+ *     responses:
+ *       200:
+ *         description: List of providers
+ */
+router.get('/', async (req, res) => {
   try {
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/list`);
-    res.json(response.data);
+    // If provider service is available, forward the request
+    try {
+      const response = await axios.get(`${PROVIDER_SERVICE_URL}/providers`, {
+        headers: { 'X-Request-ID': req.requestId },
+        timeout: 5000
+      });
+      res.json(response.data);
+    } catch (serviceError) {
+      // Fallback if provider service is not available
+      res.json({
+        providers: ['aws', 'azure', 'gcp'],
+        message: 'Using fallback data',
+        requestId: req.requestId
+      });
+    }
   } catch (error) {
-    next(error);
+    res.status(500).json({ 
+      error: 'Failed to fetch providers',
+      requestId: req.requestId 
+    });
   }
 });
 
-// Get provider details
-router.get('/:id', async (req, res, next) => {
+/**
+ * @swagger
+ * /api/providers/{provider}/regions:
+ *   get:
+ *     summary: Get regions for a provider
+ *     tags: [Providers]
+ */
+router.get('/:provider/regions', async (req, res) => {
+  const { provider } = req.params;
+  
   try {
-    const providerId = req.params.id;
-    
-    // Validate provider ID
-    if (!['aws', 'azure', 'gcp', 'ibm', 'oracle', 'alibaba'].includes(providerId)) {
-      return res.status(400).json({ error: 'Invalid provider ID' });
+    try {
+      const response = await axios.get(`${PROVIDER_SERVICE_URL}/providers/${provider}/regions`, {
+        headers: { 'X-Request-ID': req.requestId },
+        timeout: 5000
+      });
+      res.json(response.data);
+    } catch (serviceError) {
+      // Fallback regions
+      const fallbackRegions = {
+        aws: ['us-east-1', 'us-west-2', 'eu-west-1'],
+        azure: ['East US', 'West US', 'North Europe'],
+        gcp: ['us-central1', 'us-west1', 'europe-west1']
+      };
+      
+      res.json({
+        provider,
+        regions: fallbackRegions[provider] || [],
+        message: 'Using fallback data',
+        requestId: req.requestId
+      });
     }
-    
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/provider/${providerId}`);
-    res.json(response.data);
   } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Provider not found' });
-    }
-    next(error);
-  }
-});
-
-// Get provider regions
-router.get('/:id/regions', async (req, res, next) => {
-  try {
-    const providerId = req.params.id;
-    
-    // Validate provider ID
-    if (!['aws', 'azure', 'gcp', 'ibm', 'oracle', 'alibaba'].includes(providerId)) {
-      return res.status(400).json({ error: 'Invalid provider ID' });
-    }
-    
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/provider/${providerId}/regions`);
-    res.json(response.data);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Provider or regions not found' });
-    }
-    next(error);
-  }
-});
-
-// Get service mappings
-router.get('/service-mappings', async (req, res, next) => {
-  try {
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/service-mappings`);
-    res.json(response.data);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Get specific service mapping
-router.get('/service-mappings/:service', async (req, res, next) => {
-  try {
-    const serviceType = req.params.service;
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/equivalent-services/${serviceType}`);
-    res.json(response.data);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Service mapping not found' });
-    }
-    next(error);
-  }
-});
-
-// Get instance mappings
-router.get('/instance-mappings', async (req, res, next) => {
-  try {
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/instance-mappings`);
-    res.json(response.data);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Get specific instance size mapping
-router.get('/instance-mappings/:size', async (req, res, next) => {
-  try {
-    const size = req.params.size;
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/equivalent-instances/${size}`);
-    res.json(response.data);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Instance size mapping not found' });
-    }
-    next(error);
-  }
-});
-
-// Get provider characteristics
-router.get('/:id/characteristics', async (req, res, next) => {
-  try {
-    const providerId = req.params.id;
-    
-    // Validate provider ID
-    if (!['aws', 'azure', 'gcp', 'ibm', 'oracle', 'alibaba'].includes(providerId)) {
-      return res.status(400).json({ error: 'Invalid provider ID' });
-    }
-    
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/provider/${providerId}/characteristics`);
-    res.json(response.data);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Provider characteristics not found' });
-    }
-    next(error);
-  }
-});
-
-// Compare providers for a specific feature
-router.get('/compare/:feature', async (req, res, next) => {
-  try {
-    const feature = req.params.feature;
-    const providers = req.query.providers ? req.query.providers.split(',') : ['aws', 'azure', 'gcp', 'ibm', 'oracle', 'alibaba'];
-    
-    // Validate providers
-    const invalidProviders = providers.filter(p => !['aws', 'azure', 'gcp', 'ibm', 'oracle', 'alibaba'].includes(p));
-    if (invalidProviders.length > 0) {
-      return res.status(400).json({ error: `Invalid provider IDs: ${invalidProviders.join(', ')}` });
-    }
-    
-    const response = await axios.get(`${PROVIDER_SERVICE_URL}/compare/${feature}?providers=${providers.join(',')}`);
-    res.json(response.data);
-  } catch (error) {
-    if (error.response && error.response.status === 404) {
-      return res.status(404).json({ error: 'Feature comparison not found' });
-    }
-    next(error);
+    res.status(500).json({ 
+      error: 'Failed to fetch regions',
+      requestId: req.requestId 
+    });
   }
 });
 

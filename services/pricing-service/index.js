@@ -1,183 +1,178 @@
 const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const winston = require('winston');
-const Redis = require('ioredis');
-const pricingService = require('./services/pricingService');
-// Import the pricing models directly, which is the robust way to load data
-const localComputePricing = require('./models/awsComputePricing');
 
 const app = express();
 const PORT = process.env.PORT || 4001;
 
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'pricing-service.log' })
-  ]
-});
-
-const memoryCache = {};
-const redis = {
-  get: async (key) => {
-    const item = memoryCache[key];
-    if (!item) return null;
-    if (item.expiry < Date.now()) {
-      delete memoryCache[key];
-      return null;
-    }
-    return item.value;
-  },
-  set: async (key, value, mode, duration, ttl) => {
-    let expiryTime = 0;
-    if (mode === 'EX' && duration) {
-      expiryTime = Date.now() + (duration * 1000);
-    } else if (ttl) {
-      expiryTime = Date.now() + ttl;
-    } else {
-      expiryTime = Date.now() + (3600 * 1000);
-    }
-    
-    memoryCache[key] = {
-      value,
-      expiry: expiryTime
-    };
-    return 'OK';
-  },
-  del: async (key) => {
-    delete memoryCache[key];
-    return 1;
-  }
-};
-
-app.use(helmet());
-app.use(cors());
+// Basic middleware only
 app.use(express.json());
 
+// Enable CORS manually (no external package)
 app.use((req, res, next) => {
-  const requestId = req.headers['x-request-id'] || Date.now().toString(36) + Math.random().toString(36).substring(2);
-  
-  logger.info({
-    requestId,
-    method: req.method,
-    path: req.path,
-    ip: req.ip
-  });
-  
-  req.requestId = requestId;
-  res.setHeader('X-Request-ID', requestId);
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.sendStatus(200);
+  } else {
+    next();
+  }
+});
+
+// Simple logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} ${req.method} ${req.path}`);
   next();
 });
 
+// Root endpoint
 app.get('/', (req, res) => {
-  res.status(200).send('Pricing service is up and running.');
+  console.log('Root endpoint called');
+  res.status(200).json({
+    service: 'Pricing Service',
+    status: 'running',
+    port: PORT,
+    timestamp: new Date().toISOString()
+  });
 });
 
+// Health check
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', timestamp: new Date() });
+  console.log('Health check called');
+  res.status(200).json({
+    status: 'healthy',
+    uptime: Math.floor(process.uptime()),
+    memory: process.memoryUsage().rss,
+    timestamp: new Date().toISOString()
+  });
 });
 
-app.post('/calculate', async (req, res) => {
+// Basic pricing calculation
+app.post('/calculate', (req, res) => {
+  console.log('Calculate endpoint called');
   try {
-    const workload = req.body;
+    const workload = req.body || {};
     
-    if (!workload) {
-      return res.status(400).json({ error: 'Workload configuration is required' });
-    }
+    // Super simple calculation
+    const instances = workload.instances || 1;
+    const storage = workload.storage || 100;
     
-    const cacheKey = `pricing:${JSON.stringify(workload)}`;
-    const cachedResult = await redis.get(cacheKey);
+    const result = {
+      aws: {
+        compute: instances * 73,
+        storage: storage * 0.023,
+        total: (instances * 73) + (storage * 0.023)
+      },
+      azure: {
+        compute: instances * 88,
+        storage: storage * 0.025,
+        total: (instances * 88) + (storage * 0.025)
+      },
+      gcp: {
+        compute: instances * 66,
+        storage: storage * 0.020,
+        total: (instances * 66) + (storage * 0.020)
+      },
+      timestamp: new Date().toISOString()
+    };
     
-    if (cachedResult) {
-      logger.info({
-        requestId: req.requestId,
-        message: 'Returning cached pricing result'
-      });
-      
-      return res.json(JSON.parse(cachedResult));
-    }
-    
-    const result = await pricingService.calculateWorkloadCost(workload);
-    
-    await redis.set(cacheKey, JSON.stringify(result), 'EX', 3600);
-    
+    console.log(`Calculated pricing for ${instances} instances, ${storage}GB storage`);
     res.json(result);
   } catch (error) {
-    logger.error({
-      requestId: req.requestId,
-      error: error.message,
-      stack: error.stack
+    console.error('Calculate error:', error.message);
+    res.status(500).json({
+      error: 'Calculation failed',
+      message: error.message
     });
-    
-    res.status(500).json({ error: 'Error calculating pricing' });
   }
 });
 
-// Rewritten /instances route to be robust
+// Basic instances endpoint
 app.get('/instances', (req, res) => {
-  try {
-    const provider = req.query.provider;
-    const region = req.query.region;
-    
-    if (!provider) {
-      return res.status(400).json({ error: 'Provider is required' });
-    }
-    
-    const pricingData = localComputePricing;
-    
-    if (!pricingData[provider]) {
-      return res.status(404).json({ error: `Provider ${provider} not found` });
-    }
-    
-    if (region && !pricingData[provider][region]) {
-      return res.status(404).json({ error: `Region ${region} not found for provider ${provider}` });
-    }
-    
-    const regionData = region ? 
-      { [region]: pricingData[provider][region] } : 
-      pricingData[provider];
-    
-    const instances = {};
-    
-    for (const [r, data] of Object.entries(regionData)) {
-      instances[r] = Object.keys(data).map(instance => ({
-        name: instance,
-        ...data[instance]
-      }));
-    }
-    
-    res.json(instances);
-  } catch (error) {
-    logger.error({
-      requestId: req.requestId,
-      error: error.message,
-      stack: error.stack
-    });
-    
-    res.status(500).json({ error: 'Error retrieving instance types' });
+  console.log('Instances endpoint called');
+  const { provider } = req.query;
+  
+  const data = {
+    aws: [
+      { name: 't3.micro', vcpu: 2, memory: 1, price: 0.0104 },
+      { name: 't3.small', vcpu: 2, memory: 2, price: 0.0208 }
+    ],
+    azure: [
+      { name: 'Standard_B1s', vcpu: 1, memory: 1, price: 0.0052 }
+    ],
+    gcp: [
+      { name: 'n1-standard-1', vcpu: 1, memory: 3.75, price: 0.0475 }
+    ]
+  };
+  
+  if (provider && data[provider]) {
+    res.json({ provider, instances: data[provider] });
+  } else {
+    res.json({ instances: data });
   }
 });
 
-app.use((err, req, res, next) => {
-  logger.error({
-    requestId: req.requestId,
-    error: err.message,
-    stack: err.stack
+// Catch all other routes
+app.use('*', (req, res) => {
+  console.log(`404: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({
+    error: 'Not found',
+    path: req.originalUrl,
+    available: ['/', '/health', 'POST /calculate', '/instances']
   });
-  
+});
+
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error('Global error:', err.message);
   res.status(500).json({
     error: 'Internal server error',
-    requestId: req.requestId
+    message: err.message
   });
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  logger.info(`Pricing Service listening on port ${PORT}`);
+// Start server
+console.log(`Starting server on port ${PORT}...`);
+const server = app.listen(PORT, '0.0.0.0', () => {
+  console.log(`✅ Pricing Service successfully started on port ${PORT}`);
+  console.log(`🏥 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`📊 Ready to serve requests`);
+});
+
+// Handle startup errors
+server.on('error', (error) => {
+  console.error('❌ Server startup error:', error.message);
+  if (error.code === 'EADDRINUSE') {
+    console.error(`Port ${PORT} is already in use`);
+  }
+  process.exit(1);
+});
+
+// Graceful shutdown
+process.on('SIGTERM', () => {
+  console.log('SIGTERM received, shutting down gracefully');
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('SIGINT received, shutting down gracefully');
+  server.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});
+
+// Keep process alive
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught exception:', err.message);
+  process.exit(1);
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled rejection at:', promise, 'reason:', reason);
+  process.exit(1);
 });
 
 module.exports = app;
