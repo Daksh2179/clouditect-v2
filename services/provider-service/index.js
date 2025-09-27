@@ -354,6 +354,9 @@ const instanceMappings = {
 };
 
 // Define routes
+app.get('/', (req, res) => {
+  res.status(200).send('Provider service is up and running.');
+});
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });

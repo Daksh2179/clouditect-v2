@@ -87,6 +87,11 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 
+app.get('/', (req, res) => {
+  res.status(200).send('API Gateway is operational.');
+});
+
+
 // Create routes directory and router files
 const fs = require('fs');
 if (!fs.existsSync('./routes')) {

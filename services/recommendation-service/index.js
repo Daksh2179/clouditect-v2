@@ -77,6 +77,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.status(200).send('Recommendation service is up and running.');
+});
+
 const checkOverProvisioning = (workload) => {
   const recommendations = [];
   
