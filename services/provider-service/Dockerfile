@@ -2,8 +2,9 @@ FROM node:18-alpine
 
 WORKDIR /app
 
-# Copy package files
-COPY services/provider-service/package*.json ./
+# Copy package files explicitly
+COPY services/provider-service/package.json ./
+COPY services/provider-service/package-lock.json ./
 
 # Install dependencies
 RUN npm ci --only=production
