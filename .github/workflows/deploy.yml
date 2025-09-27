@@ -58,22 +58,30 @@ jobs:
             --allow-unauthenticated \
             --port=4000
 
-      # --- Build and Deploy Pricing Service (IMPROVED) ---
-      - - name: Deploy Pricing Service to Cloud Run
-  run: |-
-    echo "Deploying pricing service with enhanced settings..."
-    gcloud run deploy clouditect-pricing-service \
-      --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest \
-      --region us-central1 \
-      --platform managed \
-      --allow-unauthenticated \
-      --port=4001 \
-      --timeout=900 \
-      --memory=512Mi \
-      --cpu=1 \
-      --concurrency=80 \
-      --max-instances=10 \
-      --set-env-vars="NODE_ENV=production,PORT=4001"
+      # --- Build and Deploy Pricing Service (FIXED) ---
+      - name: Build and Push Pricing Service
+        run: |-
+          echo "Building pricing service..."
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest -f ./services/pricing-service/Dockerfile .
+          echo "Pushing pricing service..."
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest
+          echo "Pricing service image pushed successfully"
+
+      - name: Deploy Pricing Service to Cloud Run
+        run: |-
+          echo "Deploying pricing service with enhanced settings..."
+          gcloud run deploy clouditect-pricing-service \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --port=4001 \
+            --timeout=900 \
+            --memory=512Mi \
+            --cpu=1 \
+            --concurrency=80 \
+            --max-instances=10 \
+            --set-env-vars="NODE_ENV=production,PORT=4001"
 
       # --- Build and Deploy Recommendation Service ---
       - name: Build and Push Recommendation Service
