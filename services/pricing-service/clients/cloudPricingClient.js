@@ -48,9 +48,14 @@ const logger = winston.createLogger({
   ]
 });
 
-// Initialize Redis client
-const REDIS_URL = process.env.REDIS_URL || 'redis://localhost:6379';
-const redis = new Redis(REDIS_URL);
+const memoryCache = {};
+const redis = {
+  get: async (key) => memoryCache[key] || null,
+  set: async (key, value) => {
+    memoryCache[key] = value;
+    return 'OK';
+  },
+};
 
 class CloudPricingClient {
   constructor() {

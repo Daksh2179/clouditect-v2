@@ -29,36 +29,11 @@ const logger = winston.createLogger({
 // Initialize Redis client
 const memoryCache = {};
 const redis = {
-  get: async (key) => {
-    const item = memoryCache[key];
-    if (!item) return null;
-    if (item.expiry < Date.now()) {
-      delete memoryCache[key];
-      return null;
-    }
-    return item.value;
-  },
-  set: async (key, value, mode, duration, ttl) => {
-    // Handle different forms of the set command
-    let expiryTime = 0;
-    if (mode === 'EX' && duration) {
-      expiryTime = Date.now() + (duration * 1000);
-    } else if (ttl) {
-      expiryTime = Date.now() + ttl;
-    } else {
-      expiryTime = Date.now() + (3600 * 1000); // Default 1 hour
-    }
-    
-    memoryCache[key] = {
-      value,
-      expiry: expiryTime
-    };
+  get: async (key) => memoryCache[key] || null,
+  set: async (key, value, mode, duration) => { // Added mode/duration to match usage
+    memoryCache[key] = value;
     return 'OK';
   },
-  del: async (key) => {
-    delete memoryCache[key];
-    return 1;
-  }
 };
 
 

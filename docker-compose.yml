@@ -33,7 +33,7 @@ services:
       - PRICING_SERVICE_URL=http://pricing-service:4001
       - RECOMMENDATION_SERVICE_URL=http://recommendation-service:4002
       - PROVIDER_SERVICE_URL=http://provider-service:4003
-      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
+
     depends_on:
       - pricing-service
       - recommendation-service
@@ -55,7 +55,6 @@ services:
       - /app/node_modules
     environment:
       - PORT=${PRICING_SERVICE_PORT:-4001}
-      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
       - USE_REAL_PRICING_APIS=${USE_REAL_PRICING_APIS:-true}
       - FALLBACK_TO_LOCAL_PRICING=${FALLBACK_TO_LOCAL_PRICING:-true}
       - PRICING_CACHE_TTL=${PRICING_CACHE_TTL:-86400}
@@ -77,7 +76,6 @@ services:
     environment:
       - PORT=${RECOMMENDATION_SERVICE_PORT:-4002}
       - PRICING_SERVICE_URL=http://pricing-service:4001
-      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
     depends_on:
       - pricing-service
       - cache-db
@@ -97,19 +95,6 @@ services:
       - /app/node_modules
     environment:
       - PORT=${PROVIDER_SERVICE_PORT:-4003}
-      - REDIS_URL=${REDIS_URL:-redis://cache-db:6379}
-    depends_on:
-      - cache-db
-    networks:
-      - app-network
-
-  # Redis Cache
-  cache-db:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis-data:/data
     networks:
       - app-network
 
