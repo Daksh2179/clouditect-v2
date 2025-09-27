@@ -28,7 +28,6 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker --quiet
 
-      # --- Build and Deploy Frontend ---
       - name: Build and Push Frontend
         run: |-
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-frontend:latest -f ./frontend/Dockerfile .
@@ -43,7 +42,6 @@ jobs:
             --allow-unauthenticated \
             --port=8080
 
-      # --- Build and Deploy API Gateway ---
       - name: Build and Push API Gateway
         run: |-
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-api-gateway:latest -f ./services/api-gateway/Dockerfile .
@@ -58,24 +56,26 @@ jobs:
             --allow-unauthenticated \
             --port=4000
 
-      # --- Build and Deploy Pricing Service (FIXED) ---
-      - name: Deploy Pricing Service to Cloud Run
-  run: |-
-    echo "Deploying pricing service with enhanced settings..."
-    gcloud run deploy clouditect-pricing-service \
-      --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest \
-      --region us-central1 \
-      --platform managed \
-      --allow-unauthenticated \
-      --port=4001 \
-      --timeout=900 \
-      --memory=512Mi \
-      --cpu=1 \
-      --concurrency=80 \
-      --max-instances=10 \
-      --set-env-vars="NODE_ENV=production"
+      - name: Build and Push Pricing Service
+        run: |-
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest -f ./services/pricing-service/Dockerfile .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest
 
-      # --- Build and Deploy Recommendation Service ---
+      - name: Deploy Pricing Service to Cloud Run
+        run: |-
+          gcloud run deploy clouditect-pricing-service \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-pricing-service:latest \
+            --region us-central1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --port=4001 \
+            --timeout=900 \
+            --memory=512Mi \
+            --cpu=1 \
+            --concurrency=80 \
+            --max-instances=10 \
+            --set-env-vars="NODE_ENV=production"
+
       - name: Build and Push Recommendation Service
         run: |-
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-recommendation-service:latest -f ./services/recommendation-service/Dockerfile .
@@ -88,11 +88,8 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --port=4002 \
-            --timeout=900 \
-            --memory=512Mi
+            --port=4002
 
-      # --- Build and Deploy Provider Service ---
       - name: Build and Push Provider Service
         run: |-
           docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/clouditect-provider-service:latest -f ./services/provider-service/Dockerfile .
@@ -105,6 +102,4 @@ jobs:
             --region us-central1 \
             --platform managed \
             --allow-unauthenticated \
-            --port=4003 \
-            --timeout=900 \
-            --memory=512Mi
+            --port=4003
