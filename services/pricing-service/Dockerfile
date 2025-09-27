@@ -12,4 +12,4 @@ COPY data/pricing ./data/
 
 EXPOSE 4001
 
-CMD ["node", "index.js"]
+CMD node index.js

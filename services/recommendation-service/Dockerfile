@@ -9,4 +9,4 @@ COPY services/recommendation-service/. .
 
 EXPOSE 4002
 
-CMD ["node", "index.js"]
+CMD node index.js
